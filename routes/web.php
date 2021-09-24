@@ -66,3 +66,20 @@ Route::get('obra/form/{id?}', [ObraController::class, 'form'])->name('obra.form'
 
 Route::post('/obra/save', [ObraController::class, 'save'])->name('obra.save');
 
+use App\Http\Controllers\CategoriaController;
+Route::get('/categorias', [CategoriaController::class , "show"] );
+
+Route::get('/categoria/delete/{id}', [CategoriaController::class, 'delete'])->name('categoria.delete');
+
+Route::get('categoria/form/{id?}', [CategoriaController::class, 'form'])->name('categoria.form');
+
+Route::post('/categoria/save', [CategoriaController::class, 'save'])->name('categoria.save');
+
+use App\Http\Controllers\TipoMaterialController;
+Route::get('/tipoMateriales', [TipoMaterialController::class , "show"] );
+
+Route::get('/tipoMaterial/delete/{id}', [TipoMaterialController::class, 'delete'])->name('tipoMaterial.delete');
+
+Route::get('tipoMaterial/form/{id?}', [TipoMaterialController::class, 'form'])->name('tipoMaterial.form');
+
+Route::post('/tipoMaterial/save', [TipoMaterialController::class, 'save'])->name('tipoMaterial.save');

@@ -1,16 +1,16 @@
 @extends('layout')
-@section('title', $proveedor ->id ?'Editar ---' : 'Nuevo ---')
-@section('palabra', $proveedor ->id ?'Editar ---' : 'Nuevo ---')
+@section('title', $entrada ->id ?'Editar ---' : 'Nuevo ---')
+@section('palabra', $entrada ->id ?'Editar ---' : 'Nuevo ---')
 
 @section('content')
-<form action=" {{ route('proveedor.save')}} " method="post">
+<form action=" {{ route('entrada.save')}} " method="post">
     @csrf
-    <input type="hidden" name="id" value="{{$proveedor->id}}">
+    <input type="hidden" name="id" value="{{$entrada->id}}">
 
 <div class="mb-3 row">
     <label for="fecha" class="col-sm-2 col-form-label">fecha</label>
     <div class="col-sm-10">
-        <input type="text" class="form-control" id="fecha" name='fecha' value="{{@old('fecha') ? @old('fecha') : $entrada->fecha}}">
+        <input type="date" class="form-control" id="fecha" name='fecha' value="{{@old('fecha') ? @old('fecha') : $entrada->fecha}}">
     </div>
     @error('fecha')
             <p class="text-danger">
@@ -24,9 +24,9 @@
     <label for="proveedor" class="col-sm-2 col-form-label">Proveedor</label>
     <div class="col-sm-10">
         <select name="proveedor" class="form-select">
-        @foreach ($proveedor as $proveedor )
+        @foreach ($proveedores as $proveedor )
 
-        <option value="{{ $proveedor->id }}" {{ $proveedor->id == $entrada->proveedor_id ? "selected" : "" }} >{{ $proveedor->name }}</option>
+        <option value="{{ $proveedor->id }}" {{ $proveedor->id == $entrada->proveedor_id ? "selected" : "" }} >{{ $proveedor->nombre }}</option>
 
 
         @endforeach

@@ -15,7 +15,6 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
 
 
-
     <style>
       .bd-placeholder-img {
         font-size: 1.125rem;
@@ -47,16 +46,17 @@
 
 
 
-    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-        <a class="dropdown-item" href="{{ route('logout') }}"
-           onclick="event.preventDefault();
-                         document.getElementById('logout-form').submit();">
-            {{ __('Salir') }}
-        </a>
+  <div class="navbar-nav">
+    <div class="nav-item text-nowrap">
+      <a class="nav-link px-3" href="{{ route('logout') }}"
+      onclick="event.preventDefault();
+                    document.getElementById('logout-form').submit();">
+       {{ __('cerrar sesion') }}
+   </a>
 
-        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-            @csrf
-        </form>
+   <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+       @csrf
+   </form>
     </div>
   </div>
 </header>
@@ -94,9 +94,35 @@
           <li class="nav-item">
             <a class="nav-link" href="/obras">
               <span data-feather="shopping-cart"></span>
-              Obra
+              Obras
             </a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/categorias">
+              <span data-feather="shopping-cart"></span>
+              Categorias
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/tipoMateriales">
+              <span data-feather="shopping-cart"></span>
+              tipoMateriales
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/entradaMateriales">
+              <span data-feather="shopping-cart"></span>
+              entradaMateriales
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/clientes">
+              <span data-feather="shopping-cart"></span>
+              clientes
+            </a>
+          </li>
+
+
 
       </div>
     </nav>

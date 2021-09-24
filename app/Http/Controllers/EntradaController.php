@@ -13,7 +13,7 @@ class EntradaController extends Controller
     }
 
     function show(){
-        $entradaList = Entrada::has('proveedor')->get(); // Es lo mismo que decir Select * from products
+        $entradaList = Entrada::all(); // Es lo mismo que decir Select * from products
         return view('entrada/List', ['list' =>$entradaList]);
     }
 
@@ -26,12 +26,12 @@ class EntradaController extends Controller
 
     function form($id = null){
         $entrada = new Entrada();
-        $proveedor = Proveedor::orderBy('nombre')->get();
+        $proveedores = Proveedor::orderBy('nombre')->get();
 
         if ($id != null) {
            $entrada = Entrada::findOrFail($id);
         }
-        return view('entrada/form',['entrada' => $entrada, 'proveedor' => $proveedor]);
+        return view('entrada/form',['entrada' => $entrada, 'proveedores' => $proveedores]);
     }
         function save(Request $request){
             $request->validate([
