@@ -46,6 +46,9 @@ class SalidaMaterialController extends Controller
             SalidaMaterial::create($request->all());
             $nuevaCantidad=$cant_permitida->cantidad-intval($request->cantidad);
             EntradaMaterial::cambiarCantidad($nuevaCantidad,$request->material_id);
+            $material = Material::findOrFail($request->material_id);
+            $material->cantidad= $material->cantidad-$request->cantidad;
+            $material->save();
             return redirect()->route('salidaMateriales.index')->with('success', 'SALIDA MATERIAL creada correctamente');
            //return redirect()->back(); // QUE CUANDO CREAA NOS REDIRECCIONE A LA VITA
         }

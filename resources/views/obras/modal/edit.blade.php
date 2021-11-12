@@ -1,7 +1,6 @@
-<form action="{{ route('obras.update', $obra->id )}}" method="post" enctype="multipart/form-data">
-    {{ method_field('patch')}}
+   {{ method_field('patch')}}
     {{ csrf_field() }}
-    <div class="modal fade text-left" id="ModalEdit{{ $obra->id}}" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal fade text-left" id="#material_edit_modal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -11,7 +10,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <div class="form-group{{ $errors->has('nombre') ? ' has-danger' : '' }}">
+                    {{-- <div class="form-group{{ $errors->has('nombre') ? ' has-danger' : '' }}">
                         <label class="form-control-label" for="input-name">{{ __('Nombre') }}</label>
                         <input type="text" name="nombre" id="input-name" class="form-control form-control-alternative{{ $errors->has('nombre') ? ' is-invalid' : '' }}" placeholder="{{ __('Ingrese el nombre de la marca ') }}" value="{{ old('nombre', $obra->nombre )}}" autofocus>
 
@@ -122,7 +121,7 @@
                             </span>
                         @endif
 
-                    </div>
+                    </div> --}}
 
                     <div class="text-center">
                         <button type="submit" class="btn btn-primary mt-4">{{ __('Actualizar') }}</button>
@@ -131,4 +130,4 @@
             </div>
         </div>
     </div>
-</form>
+

@@ -10,6 +10,11 @@ use Spatie\Permission\Models\Role;
 
 class UsuarioController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('verified');
+    }
     public function index(){
         $roles = Role::all()->pluck('name', 'id');
         $usuarios = User::all();

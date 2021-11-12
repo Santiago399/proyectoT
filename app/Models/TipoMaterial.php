@@ -22,7 +22,7 @@ class TipoMaterial extends Model
         'remember_token',
     ];
 
-    function material(){
+    function materiales(){
         return $this->hasMany(Material::class);
     }
 

@@ -21,7 +21,7 @@ class Marca extends Model
 
     protected $table='marcas';
 
-    function material(){
+    function materiales(){
         return $this->hasMany(Material::class);
     }
 
@@ -31,4 +31,6 @@ class Marca extends Model
         ->first();
         return $dato->nombre;
     }
+
+
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Proveedor;
 use Illuminate\Http\Request;
+use UxWeb\SweetAlert\SweetAlert;
 
 class ProveedorController extends Controller
 {
@@ -23,11 +24,11 @@ class ProveedorController extends Controller
     public function store(Request $request){
 
         $request->validate([
-            'nombre' => 'required|min:3|max:20',
-            'apellido' => 'required|min:3|max:20',
-            'celular' =>'required|numeric|unique:proveedores',
-            'correo' => 'required|email|unique:proveedores',
-            'clave' => 'required|numeric|unique:proveedores',
+            'nombre' => 'required|regex:/^[A-Z][A-Z,a-z, ,á,é,í,ó,ü]+$/',
+            'apellido' => 'required|regex:/^[A-Z][A-Z,a-z, ,á,é,í,ó,ü]+$/',
+            'celular' =>'required|regex:/^[0-9]{10}$/|unique:proveedores',
+            'correo' => 'required|email|regex:/^[a-z,A-Z,0-9]+@[a-z,A-Z,0-9]+[.][a-zA-Z0-9-]+$/|unique:proveedores',
+            'clave' => 'required|numeric',
             'estado' =>'required',
 
         ]);
@@ -35,7 +36,9 @@ class ProveedorController extends Controller
 
         Proveedor::create($request->all());
 
-        return redirect()->route('proveedores.index')->with('success', 'proveedor creado correctamente');
+        SweetAlert::success('proveedor creado correctamente !');
+
+        return redirect()->route('proveedores.index');
         // return redirect()->back(); // QUE CUANDO CREAA NOS REDIRECCIONE A LA VITA
 
     }

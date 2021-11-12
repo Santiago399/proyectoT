@@ -89,8 +89,18 @@ class ObraController extends Controller
     public static function datatableObras(){
         $query=Obra::all();
         return datatables($query)
-        ->addColumn('opciones',function($query){
-            return '  ';
+        ->addColumn('accion',function($query){
+            $acciones = '<a href="javascript:void(0)" onclick="editarMaterial('.$query->id.')"  class="btn btn-gray btn-sm btn-icon"><i class="now-ui-icons ui-2_settings-90"></i></a>';
+            //  $html='<a href="#"  class="btn btn-gray btn-sm btn-icon" data-toggle="modal" data-target="#ModalEdit'.$query->id.'" ><i class="now-ui-icons ui-2_settings-90"></i></a>
+
+            // <form action="'.route('obras.destroy', $query->id).'" method="delete" style="display: inline-block; " class="formulario-eliminar">
+
+            //     <button type="submit" rel="tooltip" class="btn btn-danger btn-sm btn-icon">
+            //         <i class="now-ui-icons ui-1_simple-remove"></i>
+            //     </button>
+            //      </form>';
+            //      return $html;
+            return $acciones;
         })
         ->addColumn('cliente',function($query){
             $cliente=Cliente::obtenerDato($query->cliente_id);
@@ -107,7 +117,8 @@ class ObraController extends Controller
 
             return $usuario;
         })
-        ->rawColumns(['opciones','cliente','categoria','usuario'])
+
+        ->rawColumns(['accion','cliente','categoria','usuario'])
         ->make(true);
     }
 }

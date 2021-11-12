@@ -11,7 +11,7 @@
                 </div>
                 <div class="modal-body">
 
-                    <div class="pl-lg-4">
+                    {{-- <div class="pl-lg-4">
                         <div class="form-group{{ $errors->has('nombre') ? ' has-danger' : '' }}">
                             <label class="form-control-label" for="input-name">{{ __('Nombre') }}</label>
                             <input type="text" name="nombre" id="input-name" class="form-control form-control-alternative{{ $errors->has('nombre') ? ' is-invalid' : '' }}" placeholder="{{ __('Ingrese el nombre de la marca ') }}" value="{{ old('nombre') }}" autofocus>
@@ -26,7 +26,8 @@
                             <a class="btn btn-danger mt-4"  href="{{ route('marcas.index') }}">{{ __('Volver') }}</a>
                             <button type="submit" class="btn btn-primary mt-4">{{ __('Guardar') }}</button>
                         </div>
-                    </div>
+                    </div> --}}
+                    <livewire:marca-create/>
                 </div>
             </div>
         </div>

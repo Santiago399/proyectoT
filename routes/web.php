@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Auth\Events\Verified;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,11 +19,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-
-
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::group( ['middleware' => 'auth'], function(){
+Route::group( ['middleware' => 'auth', 'Verified'], function(){
 
     Route::get('/usuarios/create',[App\Http\Controllers\UsuarioController::class, 'create'])->name('usuario.create');
     Route::post('/usuarios',[App\Http\Controllers\UsuarioController::class, 'store'])->name('usuarios.store');
@@ -49,6 +49,7 @@ Route::group( ['middleware' => 'auth'], function(){
     // Route::get('datatable/usuarios', 'DatatableController@Usuario')->name('datatable.usuario');
     Route::get('ajax/request/materiales',[App\Http\Controllers\MaterialController::class,'datatableMateriales'])->name('ajax.request.materiales');
     Route::get('ajax/request/obras',[App\Http\Controllers\ObraController::class,'datatableObras'])->name('ajax.request.obras');
+    Route::get('ajax/request/marcas',[App\Http\Controllers\MarcaController::class,'datatableMarcas'])->name('ajax.request.marcas');
 
 });
 

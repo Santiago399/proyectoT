@@ -94,22 +94,6 @@
 
             </div>
 
-            <div class="form-group{{ $errors->has('proveedor_id') ? ' has-danger' : '' }}">
-                <label class="form-control-label" for="input-name">{{ __('proveedor_id') }}</label>
-                <select name="proveedor_id" id="proveedor_id" class="form-control form-control-alternative{{ $errors->has('proveedor_id') ? ' is-invalid' : '' }}">
-                    <option value="">--Escoja la --</option>
-                    @foreach ($proveedores as $proveedor)
-                    <option value="{{ $proveedor['id'] }}">{{ $proveedor['nombre'] }}</option>
-
-                    @endforeach
-                </select>
-                @if ($errors->has('proveedor_id'))
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $errors->first('proveedor_id') }}</strong>
-                    </span>
-                @endif
-
-            </div>
             <div class="form-group{{ $errors->has('estado') ? ' has-danger' : '' }}">
                 <label class="form-control-label" for="input-name">{{ __('estado') }}</label>
                 <input type="text" name="estado" id="input-name" class="form-control form-control-alternative{{ $errors->has('estado') ? ' is-invalid' : '' }}" placeholder="{{ __('Ingrese el proveedor de la marca ') }}" value="{{ old('estado') }}" autofocus>
@@ -130,3 +114,4 @@
 </div>
 
 @endsection
+

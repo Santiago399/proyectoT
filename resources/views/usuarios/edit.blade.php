@@ -59,6 +59,9 @@
                                     </span>
                                 @endif
                             </div>
+                            @can('usuarios.index')
+
+
                             <div class="row">
                                 <label for="name" class="col-sm-2 col-form-label">Roles</label>
                                 <div class="col-sm-7">
@@ -91,6 +94,7 @@
                                     </div>
                                 </div>
                             </div>
+                            @endcan
                             <div class="text-center">
                                 <button type="submit" class="btn btn-success mt-4">{{ __('Actualizar') }}</button>
                             </div>

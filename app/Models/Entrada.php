@@ -27,6 +27,10 @@ class Entrada extends Model
         return $this->belongsTo(Proveedor::class);
     }
 
+    function materiales(){
+        return $this->belongsToMany(Material::class);
+    }
+
     public static function obtenerDatosTrimestre(){
         $primer_dia= DB::select('select sum(cantidad) as primer_dia  from entrada_materiales where created_at >= DAY(now())-5 AND created_at <= now()', [1]);
         $segundo_dia= DB::select('select sum(cantidad) as segundo_dia  from entrada_materiales where created_at >= DAY(now())-4 AND created_at <= now()', [1]);

@@ -30,6 +30,7 @@ class EntradaMaterialController extends Controller
 
     public function store(Request $request){
 
+        $cant_permitida=EntradaMaterial::getCant($request->material_id);
         $request->validate([
             'estado' => 'required',
             'cantidad' => 'required|numeric',
@@ -37,11 +38,16 @@ class EntradaMaterialController extends Controller
             'entrada_id' => 'required',
         ]);
 
-        EntradaMaterial::create($request->all());
-
-         return redirect()->route('entradaMateriales.index')->with('success', 'entrada materiales creada correctamente');
-        //return redirect()->back(); // QUE CUANDO CREAA NOS REDIRECCIONE A LA VITA
-
+        if(intval($request->nuevaCantidad)){
+            return redirect()->route('entradaMateriales.index')->with('true', 'cantida rehistrada');
+        }else{
+            EntradaMaterial::create($request->all());
+            $material = Material::findOrFail($request->material_id);
+            $material->cantidad= $material->cantidad+$request->cantidad;
+            $material->save();
+            return redirect()->route('entradaMateriales.index')->with('success', 'SALIDA MATERIAL creada correctamente');
+           //return redirect()->back(); // QUE CUANDO CREAA NOS REDIRECCIONE A LA VITA
+        }
     }
 
     public function edit(EntradaMaterial $entradaMaterial){

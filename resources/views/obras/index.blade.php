@@ -45,14 +45,50 @@
     </div>
   </div>
   @include('obras.modal.create')
+  @include('obras.modal.edit')
 @endsection
 
 @section('js')
 <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js"></script>
 
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+@if (session('success') == ' eliminado correctamente')
+   <script>
+        Swal.fire(
+            '¡Eliminado!',
+            'Se ha eliminado con éxito.',
+            'success'
+            )
+    </script>
+
+@endif
 <script>
+    $('.formulario-eliminar').submit(function(e){
+        e.preventDefault();
+
+        Swal.fire({
+        title: '¿Estas seguro?',
+        text: "esta marca se eliminara definitivamente!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: '¡Sí, eliminar!',
+        cancelButtonText: 'Cancelar'
+        }).then((result) => {
+        if (result.isConfirmed) {
+            // Swal.fire(
+            // 'Deleted!',
+            // 'Your file has been deleted.',
+            // 'success'
+            // )
+
+            this.submit();
+        }
+      })
+    });
     $('#obras').DataTable({
                 "language": {
                 "decimal": "",
@@ -90,9 +126,10 @@
                 {"data":"cliente"},
                 {"data":"categoria"},
                 {"data":"usuario"},
-                { "data": "opciones",orderable:false, searchable:false },
+                { "data": "accion",orderable:false, searchable:false },
                 ],
 
     });
 </script>
+
 @endsection

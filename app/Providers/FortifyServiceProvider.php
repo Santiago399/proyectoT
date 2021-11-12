@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Providers;
-
+use Laravel\Fortify\Contracts\LogoutResponse;
 use App\Actions\Fortify\CreateNewUser;
 use App\Actions\Fortify\ResetUserPassword;
 use App\Actions\Fortify\UpdateUserPassword;
@@ -20,9 +20,14 @@ class FortifyServiceProvider extends ServiceProvider
      * @return void
      */
     public function register()
-    {
-        //
-    }
+{
+    $this->app->instance(LogoutResponse::class, new class implements LogoutResponse {
+        public function toResponse($request)
+        {
+            return redirect('/');
+        }
+    });
+}
 
     /**
      * Bootstrap any application services.

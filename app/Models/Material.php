@@ -18,7 +18,6 @@ class Material extends Model
         'cantidad',
         'tipo_id',
         'marca_id',
-        'proveedor_id',
         'estado',
 
     ];
@@ -29,7 +28,7 @@ class Material extends Model
 
     protected $table='materiales';
 
-    function tipoMaterial(){
+    function tipo(){
         return $this->belongsTo(TipoMaterial::class);
     }
     function marca(){
@@ -40,6 +39,6 @@ class Material extends Model
     }
 
     function entradaMaterial(){
-        return $this->hasMany(EntradaMaterial::class);
+        return $this->belongsToMany(EntradaMaterial::class);
     }
 }

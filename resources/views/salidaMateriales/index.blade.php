@@ -10,12 +10,99 @@
   <div class="content">
     <div class="row">
       <div class="col-md-12">
+          <div class="card">
+              <div class="card-body">
+                <form method="post" action="{{ route('salidaMateriales.store') }}" autocomplete="off">
+                    <div class="card-body">
+                        @csrf
+                        @include('alerts.success')
+                        <div class="pl-lg-4">
+                            <div class="form-group{{ $errors->has('estado') ? ' has-danger' : '' }}">
+                                <label class="form-control-label" for="input-name">{{ __('Estado de la salida') }}</label>
+                                <input type="text" name="estado" id="input-name" class="form-control form-control-alternative{{ $errors->has('estado') ? ' is-invalid' : '' }}" value="{{ old('estado') }}" autofocus>
+
+                                @if ($errors->has('estado'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('estado') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                            {{-- <div class="form-group{{ $errors->has('material_id') ? ' has-danger' : '' }}">
+                                <label class="form-control-label" for="input-name">{{ __('Seleccione el material') }}</label>
+                                <select name="material_id" id="material_id" class="form-control form-control-alternative{{ $errors->has('material_id') ? ' is-invalid' : '' }}">
+                                    <option value="">--Escoja  el material --</option>
+                                    @foreach ($entradaMateriales as $material_ent)
+                                    <option value="{{ $material_ent->id }}">{{ $material_ent->nombre }} - Disponible: {{$material_ent->cantidad}}</option>
+
+                                    @endforeach
+                                </select>
+                                @if ($errors->has('material_id'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('material_id') }}</strong>
+                                    </span>
+                                @endif
+
+                            </div> --}}
+                            <div class="form-group{{ $errors->has('material_id') ? ' has-danger' : '' }}">
+                                <label class="form-control-label" for="input-name">{{ __('material_id') }}</label>
+                                <select name="material_id" id="material_id" class="form-control form-control-alternative{{ $errors->has('material_id') ? ' is-invalid' : '' }}">
+                                    <option value="">--Escoja  el material --</option>
+                                    @foreach ($materiales as $material)
+                                    <option value="{{ $material['id'] }}">{{ $material['nombre'] }}</option>
+
+                                    @endforeach
+                                </select>
+                                @if ($errors->has('material_id'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('material_id') }}</strong>
+                                    </span>
+                                @endif
+
+                            </div>
+
+                            <div class="form-group{{ $errors->has('cantidad') ? ' has-danger' : '' }}">
+                                <label class="form-control-label" for="input-name">{{ __('Ingrese la cantidad') }}</label>
+                                <input type="number" name="cantidad" id="input-name" class="form-control form-control-alternative{{ $errors->has('cantidad') ? ' is-invalid' : '' }}" value="{{ old('cantidad') }}" autofocus>
+
+                                @if ($errors->has('cantidad'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('cantidad') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+
+
+
+                            <div class="form-group{{ $errors->has('salida_id') ? ' has-danger' : '' }}">
+                                <label class="form-control-label" for="input-name">{{ __('Escoja la salida') }}</label>
+                                <select name="salida_id" id="salida_id" class="form-control form-control-alternative{{ $errors->has('salida_id') ? ' is-invalid' : '' }}">
+                                    <option value="">--Escoja  el salida --</option>
+                                    @foreach ($salidas as $salida)
+                                    <option value="{{ $salida['id'] }}">{{ $salida['fecha'] }}</option>
+
+                                    @endforeach
+                                </select>
+                                @if ($errors->has('salida_id'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('salida_id') }}</strong>
+                                    </span>
+                                @endif
+
+                            </div>
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary mt-4">{{ __('Guardar') }}</button>
+                            </div>
+                        </div>
+                        </div>
+                </form>
+              </div>
+          </div>
         <div class="card">
           <div class="card-header">
             <div class="text-right">
-                @can('salidasMateriales.create')
+                {{-- @can('salidasMateriales.create')
                 <a href="#" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#ModalCreate">Añadir Salida Material</a>
-                @endcan
+                @endcan --}}
               </div>
             <h4 class="card-title"> Salida Material </h4>
           </div>

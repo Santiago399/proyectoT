@@ -21,13 +21,11 @@ class CreateMaterialesTable extends Migration
             $table->integer('cantidad');
             $table->foreignId('tipo_id');
             $table->foreignId('marca_id');
-            $table->foreignId('proveedor_id');
             $table->string('estado');
             $table->timestamps();
 
             $table->foreign('tipo_id')->references('id')->on('tipo_materiales');
             $table->foreign('marca_id')->references('id')->on('marcas');
-            $table->foreign('proveedor_id')->references('id')->on('proveedores');
 
         });
     }

@@ -14,10 +14,10 @@ class MaterialController extends Controller
 
         $tipos = TipoMaterial::orderBy('nombre')->get();
         $marcas = Marca::orderBy('nombre')->get();
-        $proveedores = Proveedor::orderBy('nombre')->get();
 
-        $materiales = Material::paginate(10);
-        return view('materiales.index', compact('materiales','tipos', 'marcas', 'proveedores'));
+
+        $materiales = Material::all();
+        return view('materiales.index', compact('materiales','tipos', 'marcas'));
 
     }
 
@@ -27,22 +27,20 @@ class MaterialController extends Controller
         // $tipoMaterial = TipoMaterial::orderBy('nombre')->get();
         $tipos = TipoMaterial::orderBy('nombre')->get();
         $marcas = Marca::orderBy('nombre')->get();
-        $proveedores = Proveedor::orderBy('nombre')->get();
 
-        return view('materiales.create', compact('tipos', 'marcas', 'proveedores'));
+
+        return view('materiales.create', compact('tipos', 'marcas'));
     }
     public function store(Request $request){
 
         $request->validate([
-            'nombre' => 'required|min:3|max:20|unique:materiales',
-            'peso' => 'required|min:3|max:10|',
-            'tamaño' => 'required|min:3|max:10|',
+            'nombre' => 'required|min:1|unique:materiales',
+            'peso' => 'required|min:1',
+            'tamaño' => 'required|min:1',
             'cantidad' => 'required|numeric',
             'tipo_id' => 'required',
             'marca_id' => 'required',
-            'proveedor_id' => 'required',
             'estado' => 'required',
-
 
         ]);
 
@@ -61,23 +59,22 @@ class MaterialController extends Controller
     }
 
     public function edit(Material $material){
-
-        $materiales = Material::find($material);
+          $material = Material::find($material);
 
         $tipos = TipoMaterial::orderBy('nombre')->get();
         $marcas = Marca::orderBy('nombre')->get();
-        $proveedores = Proveedor::orderBy('nombre')->get();
 
-        return view('materiales.edit', compact('material','tipos','marcas','proveedores'));
+
+        return view('materiales.edit', compact('material','tipos','marcas'));
 
     }
 
     public function update(Request $request, Material $material){
 
         // $material=Material::findOrFail($material);
-        $data = $request->only('nombre', 'peso', 'tamaño', 'cantidad', 'tipo_id', 'marca_id', 'proveedor_id', 'estado');
+        // $data = $request->only('nombre', 'peso', 'tamaño', 'cantidad', 'tipo_id', 'marca_id', 'estado');
+        $material->update($request->all());
 
-        $material->update($data);
         return redirect()->route('materiales.index')->with('success', 'Material actualizado correctamente');
     }
 
@@ -87,32 +84,5 @@ class MaterialController extends Controller
         return back()->with('success', ' Material eliminado correctamente');
 
     }
-    public function datatableMateriales(){
-        $query=Material::all();
-        return datatables($query)
-        ->addColumn('opciones',function($query){
-            $html='';
 
-
-            return $html;
-        })
-        ->addColumn('tipo',function($query){
-            $tipo=TipoMaterial::obtenerTipo($query->tipo_id);
-
-            return $tipo;
-        })
-        ->addColumn('marca',function($query){
-            $marca=Marca::obtenerMarca($query->marca_id);
-
-            return $marca;
-        })
-        ->addColumn('proveedor',function($query){
-            $proveedor=Proveedor::obtenerProveedor($query->proveedor_id);
-
-            return $proveedor;
-        })
-        ->rawColumns(['opciones','tipo','marca','proveedor'])
-        ->make(true);
-
-    }
 }
