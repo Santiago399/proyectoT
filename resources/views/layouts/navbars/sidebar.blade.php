@@ -22,7 +22,7 @@
         @can('roles.index')
         <li>
           <a href="{{ route('roles.index') }}">
-            <i class="now-ui-icons design_app"></i>
+            <i class="now-ui-icons business_badge"></i>
             <p>{{ __('Roles') }}</p>
           </a>
         </li>
@@ -39,7 +39,7 @@
           @can('usuarios.index')
         <li>
           <a href="{{ route('usuarios.index') }}">
-            <i class="now-ui-icons education_atom"></i>
+            <i class="now-ui-icons users_circle-08"></i>
             <p>{{ __('Usuarios') }}</p>
           </a>
         </li>
@@ -47,7 +47,7 @@
         @can('proveedores.index')
         <li>
           <a href="{{ route('proveedores.index') }}">
-            <i class="now-ui-icons education_atom"></i>
+            <i class="now-ui-icons users_circle-08"></i>
             <p>{{ __('Proveedores') }}</p>
           </a>
         </li>
@@ -55,7 +55,7 @@
         @can('clientes.index')
         <li>
           <a href="{{ route('clientes.index') }}">
-            <i class="now-ui-icons education_atom"></i>
+            <i class="now-ui-icons users_circle-08"></i>
             <p>{{ __('Clientes') }}</p>
           </a>
         </li>
@@ -74,7 +74,7 @@
         @can('marcas.index')
         <li>
           <a href="{{ route('marcas.index') }}">
-            <i class="now-ui-icons design_bullet-list-67"></i>
+            <i class="now-ui-icons location_map-big"></i>
             <p>{{ __('Marcas') }}</p>
           </a>
         </li>
@@ -82,7 +82,7 @@
         @can('categorias.index')
         <li >
           <a href="{{ route('categorias.index') }}">
-            <i class="now-ui-icons design_bullet-list-67"></i>
+            <i class="now-ui-icons location_map-big"></i>
             <p>{{ __('Categorias') }}</p>
           </a>
         </li>
@@ -94,7 +94,7 @@
         @can('obras.index')
         <li>
           <a href="{{ route('obras.index') }}">
-            <i class="now-ui-icons design_bullet-list-67"></i>
+            <i class="now-ui-icons ui-2_settings-90"></i>
             <p>{{ __('Obras') }}</p>
           </a>
         </li>
@@ -102,40 +102,40 @@
         @can('materiales.index')
         <li>
           <a href="{{ route('materiales.index') }}">
-            <i class="now-ui-icons design_bullet-list-67"></i>
+            <i class="now-ui-icons ui-2_settings-90"></i>
             <p>{{ __('Materiales') }}</p>
           </a>
         </li>
         @endcan
-        {{-- @can('entradas.index')
+        @can('entradas.index')
         <li>
           <a href="{{ route('entradas.index') }}">
             <i class="now-ui-icons design_bullet-list-67"></i>
             <p>{{ __('Entradas') }}</p>
           </a>
         </li>
-        @endcan --}}
+        @endcan
         @can('entradaMateriales.index')
         <li>
           <a href="{{ route('entradaMateriales.index') }}">
-            <i class="now-ui-icons design_bullet-list-67"></i>
+            <i class="now-ui-icons design-2_ruler-pencil"></i>
             <p>{{ __('entrada Materiales') }}</p>
           </a>
         </li>
         @endcan
 
-        {{-- @can('salidas.index')
+        @can('salidas.index')
         <li>
           <a href="{{ route('salidas.index') }}">
             <i class="now-ui-icons ui-1_bell-53"></i>
             <p>{{ __('Salidas') }}</p>
           </a>
         </li>
-        @endcan --}}
+        @endcan
         @can('salidasMateriales.index')
         <li>
           <a href="{{ route('salidaMateriales.index') }}">
-            <i class="now-ui-icons ui-1_bell-53"></i>
+            <i class="now-ui-icons arrows-1_share-66"></i>
             <p>{{ __('Salida Material') }}</p>
           </a>
         </li>
@@ -148,6 +148,12 @@
           </a>
         </li>
         @endcan
+        <li>
+          <a href="{{ route('pedidos.index') }}">
+            <i class="now-ui-icons text_caps-small"></i>
+            <p>{{ __('Pedidos') }}</p>
+          </a>
+        </li>
 
       </ul>
     </div>

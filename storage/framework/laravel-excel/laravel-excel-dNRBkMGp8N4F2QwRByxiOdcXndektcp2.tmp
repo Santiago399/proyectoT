@@ -1,0 +1,4 @@
+nombre;fechaInicio;fechaEntrega;descripcion ;categoria_id;usuario_id;estado
+1. Se trata de Edificios;2/01/2020;25/02/2021;descripcion de la obra;cate;usu;en proceso
+2. Edificios de viviendas únicos;3/01/2020;26/02/2021;descripcion de la obra;cate;usu;en proceso
+3. Constructores de vecindarios;4/01/2020;27/02/2021;descripcion de la obra;cate;usu;en proceso

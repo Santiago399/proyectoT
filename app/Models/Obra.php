@@ -15,9 +15,7 @@ class Obra extends Model
         'fechaInicio',
         'fechaEntrega',
         'estado',
-        'cantidad',
         'descripcion',
-        'cliente_id',
         'categoria_id',
         'usuario_id',
 
@@ -29,10 +27,6 @@ class Obra extends Model
     ];
 
     protected $table = "obras";
-
-    function cliente(){
-        return $this->belongsTo(Cliente::class);
-    }
 
     function categoria(){
         return $this->belongsTo(Categoria::class);

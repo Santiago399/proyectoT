@@ -20,7 +20,9 @@ class MarcaController extends Controller
 
     }
     public function store(Request $request){
-
+        $request->validate([
+         'nombre' => 'required|min:3|max:20|unique:marcas',
+        ]);
 
         foreach($request->nombres as $key=>$nombres){
             $data = new Marca();
@@ -29,10 +31,7 @@ class MarcaController extends Controller
 
         }
 
-        // $request->validate([
-        //     'nombre' => 'required|min:3|max:20|unique:marcas',
-
-        // ]);
+        
 
          return redirect()->route('marcas.index')->with('success', 'Marca creada correctamente');
         //return redirect()->back(); // QUE CUANDO CREAA NOS REDIRECCIONE A LA VITA

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Queue\Jobs\SyncJob;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class RolController extends Controller
 {
@@ -56,7 +57,8 @@ class RolController extends Controller
 
         // $role->permissions()->sync($request->input('permissions', []));
         $role->syncPermissions($request->input('permissions', []));
-        return redirect()->route('roles.index')->with('info', 'se registro correctamente');
+        Alert::success('Registrado', 'Se ha registrado correctamente');
+        return redirect()->route('roles.index');
     }
 
     /**
@@ -99,8 +101,8 @@ class RolController extends Controller
 
         // $role->permissions()->syncPermissions($request->input('permissions', []));
         $role->permissions()->sync($request->permissions);
-
-        return redirect()->route('roles.edit', $role)->with('info', 'Actualizado Correctamente');
+        Alert::success('Actualizado', 'Se actualizado correctamente');
+        return redirect()->route('roles.index', $role);
     }
 
     /**
@@ -112,7 +114,7 @@ class RolController extends Controller
     public function destroy(Role $role)
     {
         $role->delete();
-
-        return redirect()->route('roles.index')->with('info', 'Eliminado Correctamente');
+    
+        return redirect()->route('roles.index')->with('satisfactoriamente', 'Se elimino con éxito.');
     }
 }

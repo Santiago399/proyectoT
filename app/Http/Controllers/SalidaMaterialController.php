@@ -7,6 +7,7 @@ use App\Models\SalidaMaterial;
 use App\Models\Salida;
 use App\Models\EntradaMaterial;
 use Illuminate\Http\Request;
+use DB;
 
 class SalidaMaterialController extends Controller
 {
@@ -33,22 +34,39 @@ class SalidaMaterialController extends Controller
     public function store(Request $request){
 
         $cant_permitida=EntradaMaterial::getCant($request->material_id);
-        $request->validate([
-            'estado' => 'required',
-            'cantidad' => 'required|numeric',
-            'salida_id' => 'required',
-            'material_id' => 'required',
+        // $request->validate([
+        //     'estado' => 'required',
+        //     'cantidad' => 'required|numeric',
+        //     'salida_id' => 'required',
+        //     'material_id' => 'required',
 
-        ]);
+        // ]);
         if(intval($request->cantidad) > $cant_permitida->cantidad){
             return redirect()->route('salidaMateriales.index')->with('false', 'supero la cantidad permitida');
         }else{
-            SalidaMaterial::create($request->all());
-            $nuevaCantidad=$cant_permitida->cantidad-intval($request->cantidad);
-            EntradaMaterial::cambiarCantidad($nuevaCantidad,$request->material_id);
-            $material = Material::findOrFail($request->material_id);
-            $material->cantidad= $material->cantidad-$request->cantidad;
+            // SalidaMaterial::create($request->all());
+            // $nuevaCantidad=$cant_permitida->cantidad-intval($request->cantidad);
+            // EntradaMaterial::cambiarCantidad($nuevaCantidad,$request->material_id);
+            $material_id = $request->material_id;
+            $salida_id = $request->salida_id;
+            $cantidad = $request->cantidad;
+            $estado = $request->estado;
+            for ($i=0; $i < count($material_id); $i++) { 
+                $datasave = [
+                    'material_id' => $material_id[$i],
+                    'salida_id' => $salida_id[$i],
+                    'cantidad' => $cantidad[$i],
+                    'estado' => $estado[$i],
+                ];
+                DB::table('salida_materiales')->insert($datasave);
+            } 
+
+
+            $materiales = Material::findOrFail($request->material_id);
+            foreach ($materiales as $indice=> $material){
+            $material->cantidad= $material->cantidad-intval($request->cantidad[$indice]);
             $material->save();
+            }
             return redirect()->route('salidaMateriales.index')->with('success', 'SALIDA MATERIAL creada correctamente');
            //return redirect()->back(); // QUE CUANDO CREAA NOS REDIRECCIONE A LA VITA
         }

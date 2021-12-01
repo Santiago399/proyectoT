@@ -45,14 +45,14 @@
                       @forelse ($role->permissions as $permission )
                         <span class="badge badge-info"> {{ $permission->description }} </span>
                       @empty
-                        <span class="badge badge-danger"> No permissions added</span>
+                        <span class="badge badge-danger"> No hay persisos agregados</span>
                       @endforelse
                     </td>
                     <td class="text-right" >
 
-                        <a href="{{ route('roles.show', $role->id) }}" class="btn btn-info btn-sm"><i >Detalle</i></a>
+                        {{-- <a href="{{ route('roles.show', $role->id) }}" class="btn btn-info btn-sm"><i >Detalle</i></a> --}}
                         <a href="{{ route('roles.edit', $role->id) }}" class="btn btn-warning btn-sm"><i >Editar</i></a>
-                        <form action="{{ route('roles.destroy', $role->id) }}" method="post" style="display: inline-block; " onsubmit="return confirm('seguro ?')">
+                        <form action="{{ route('roles.destroy', $role->id) }}" method="post" style="display: inline-block;" class="d-inline formulario-eliminar">
                           @csrf
                           @method('DELETE')
                           <button class="btn btn-danger btn-sm" type="submit">
@@ -75,4 +75,48 @@
       </div>
     </div>
   </div>
+@endsection
+
+@section('js')
+
+@if (session('satisfactoriamente') == 'Se elimino con éxito.')
+    <script>
+      Swal.fire(
+      '¡Eliminado!',
+      'El registro se elimino con éxito.',
+      'success'
+    )
+    </script>
+@endif
+<script>
+
+$('.formulario-eliminar').submit(function (e) {
+  e.preventDefault();
+
+
+  Swal.fire({
+  title: '¿Estas seguro?',
+  text: "¡El registro se eliminara definitivamente!",
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonColor: '#3085d6',
+  cancelButtonColor: '#d33',
+  confirmButtonText: '¡Si, eliminar!',
+  cancelButtonText: 'Cancelar',
+}).then((result) => {
+  if (result.isConfirmed) {
+    // Swal.fire(
+    //   'Deleted!',
+    //   'Your file has been deleted.',
+    //   'success'
+    // )
+
+    this.submit();
+  }
+})
+  
+});
+
+</script>
+    
 @endsection

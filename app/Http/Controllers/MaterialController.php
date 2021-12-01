@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers;
 
+
 use App\Models\Marca;
 use App\Models\Material;
 use App\Models\Proveedor;
 use App\Models\TipoMaterial;
 use Illuminate\Http\Request;
+use Validator, Redirect; 
+use Illuminate\Support\Facades\Input;
+
 
 class MaterialController extends Controller
 {
@@ -32,33 +36,59 @@ class MaterialController extends Controller
         return view('materiales.create', compact('tipos', 'marcas'));
     }
     public function store(Request $request){
+        // $rules = array(
+        //     'nombre' => 'required|max:30|unique:materiales',
+        //     'peso' => 'required|min:1',
+        //     'tamaño' => 'required|min:1',
+        //     'cantidad' => 'required|numeric',
+        //     'tipo_id' => 'required',
+        //     'marca_id' => 'required',
+        //     'estado' => 'required',
+        // );
 
-        $request->validate([
-            'nombre' => 'required|min:1|unique:materiales',
-            'peso' => 'required|min:1',
-            'tamaño' => 'required|min:1',
-            'cantidad' => 'required|numeric',
-            'tipo_id' => 'required',
-            'marca_id' => 'required',
-            'estado' => 'required',
+        // $validator = Validator::make(
+        //     $request->all()
+        // );
 
-        ]);
+        // // if the validator fails, redirect back to the form
 
+        // if ($validator->fails()) {
+        //     return Redirect::back()
+        //         ->withErrors($validator) // send back all errors to the login form
+        //         ->withInput();
 
-        Material::create($request->all());
+        //         $input = Input::all();
+        //     } else {
+            
+        //     $material = new Material();
+
+        //     $material->nombre =Input::get('nombre');
+        //     $material->peso =Input::get('peso');
+        //     $material->tamaño =Input::get('tamaño');
+        //     $material->cantidad =Input::get('cantidad');
+        //     $material->tipo_id =Input::get('tipo_id');
+        //     $material->marca_id =Input::get('marca_id');
+        //     $material->estado =Input::get('estado');
+                
+        //     $material->save();
+            
+            Material::create($request->all());
 
          return redirect()->route('materiales.index')->with('success', 'Material creado correctamente');
-        //return redirect()->back(); // QUE CUANDO CREAA NOS REDIRECCIONE A LA VITA
 
+        //return redirect()->back(); // QUE CUANDO CREAA NOS REDIRECCIONE A LA VITA
+    
     }
 
-    public function show(Material $material){
+    public function show(Request $request, $id){
 
+        $material = Material::findorFail($id);
+        
         return view('materiales.show', compact('material'));
 
     }
 
-    public function edit(Material $material){
+    public function edit(Material $material, $id){
           $material = Material::find($material);
 
         $tipos = TipoMaterial::orderBy('nombre')->get();
@@ -84,5 +114,7 @@ class MaterialController extends Controller
         return back()->with('success', ' Material eliminado correctamente');
 
     }
+
+
 
 }

@@ -47,6 +47,49 @@
                     </span>
                   @endif
                 </div>
+                <!--Begin input apellido -->
+                <div class="input-group lg {{ $errors->has('apellido') ? ' has-danger' : '' }}">
+                    <div class="input-group-prepend">
+                      <div class="input-group-text">
+                        <i class="now-ui-icons users_circle-08"></i>
+                      </div>
+                    </div>
+                    <input class="form-control {{ $errors->has('apellido') ? ' is-invalid' : '' }}" placeholder="{{ __('Apellido') }}" type="text" name="apellido" value="{{ old('apellido') }}" required autofocus>
+                    @if ($errors->has('apellido'))
+                      <span class="invalid-feedback" style="display: block;" role="alert">
+                        <strong>{{ $errors->first('apellido') }}</strong>
+                      </span>
+                    @endif
+                  </div>
+                  <!--Begin input direccion -->
+                <div class="input-group lg {{ $errors->has('direccion') ? ' has-danger' : '' }}">
+                    <div class="input-group-prepend">
+                      <div class="input-group-text">
+                        <i class="now-ui-icons users_circle-08"></i>
+                      </div>
+                    </div>
+                    <input class="form-control {{ $errors->has('direccion') ? ' is-invalid' : '' }}" placeholder="{{ __('Direccion') }}" type="text" name="direccion" value="{{ old('direccion') }}" required autofocus>
+                    @if ($errors->has('direccion'))
+                      <span class="invalid-feedback" style="display: block;" role="alert">
+                        <strong>{{ $errors->first('direccion') }}</strong>
+                      </span>
+                    @endif
+                  </div>
+                  <!--Begin input celular -->
+                <div class="input-group lg {{ $errors->has('celular') ? ' has-danger' : '' }}">
+                    <div class="input-group-prepend">
+                      <div class="input-group-text">
+                        <i class="now-ui-icons users_circle-08"></i>
+                      </div>
+                    </div>
+                    <input class="form-control {{ $errors->has('celular') ? ' is-invalid' : '' }}" placeholder="{{ __('Celular') }}" type="number" name="celular" value="{{ old('celular') }}" required autofocus>
+                    @if ($errors->has('celular'))
+                      <span class="invalid-feedback" style="display: block;" role="alert">
+                        <strong>{{ $errors->first('celular') }}</strong>
+                      </span>
+                    @endif
+                  </div>
+
                 <!--Begin input email -->
                 <div class="input-group lg {{ $errors->has('email') ? ' has-danger' : '' }}">
                   <div class="input-group-prepend">

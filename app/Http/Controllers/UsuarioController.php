@@ -12,8 +12,8 @@ class UsuarioController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
-        $this->middleware('verified');
+        // $this->middleware('auth');
+        // $this->middleware('verified');
     }
     public function index(){
         $roles = Role::all()->pluck('name', 'id');
@@ -85,6 +85,7 @@ class UsuarioController extends Controller
 
         $roles = $request->input('roles', []);
         $usuario->syncRoles($roles);
+
         return redirect()->route('usuarios.index', compact('roles'))->with('success', 'Usuario actualizado correctamente');
     }
 

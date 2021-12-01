@@ -18,37 +18,52 @@ class UserSeeder extends Seeder
         User::create([
             'name' => 'Administrador',
             'email' => 'admin@gmail.com',
+            'apellido' => 'admin',
+            'direccion' => 'Kennedy',
+            'celular' => '75789457',
             'password' => bcrypt('123456789')
         ])->assignRole('Administrador');
 
-        // Gerente
+        // // Gerente
         User::create([
             'name' => 'Gerente',
             'email' => 'gerente@gmail.com',
+            'apellido' => 'Rol Gerente',
+            'direccion' => 'Kennedy',
+            'celular' => '12985287',
             'password' => bcrypt('123456789')
         ])->assignRole('Gerente');
 
-        // Cliente
+        // // Cliente
         User::create([
             'name' => 'Cliente',
             'email' => 'cliente@gmail.com',
+            'apellido' => 'Rol Cliente',
+            'direccion' => 'Kennedy',
+            'celular' => '75468237485',
             'password' => bcrypt('123456789')
         ])->assignRole('Cliente');
 
-        // Proveedor
+        // // Proveedor
         User::create([
             'name' => 'Proveedor',
             'email' => 'proveedor@gmail.com',
+            'apellido' => 'Rol Proveedor',
+            'direccion' => 'Kennedy',
+            'celular' => '75487485',
             'password' => bcrypt('123456789')
         ])->assignRole('Proveedor');
 
-        //Ingeniero
+        // //Ingeniero
         User::create([
             'name' => 'Ingeniero',
             'email' => 'ingeniero@gmail.com',
+            'apellido' => 'Rol Ingeniero',
+            'direccion' => 'Kennedy',
+            'celular' => '754866665',
             'password' => bcrypt('123456789')
-        ])->assignRole('Ingeniero');
+         ])->assignRole('Ingeniero');
 
-        User::factory(2)->create();
+         User::factory(5)->create();
     }
 }

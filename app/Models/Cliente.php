@@ -27,9 +27,6 @@ class Cliente extends Model
 
     protected $table='clientes';
 
-    function obra(){
-        return $this->hasMany(Obra::class);
-    }
 
     public static function obtenerDato($id){
         $dato=Cliente::select('nombre')

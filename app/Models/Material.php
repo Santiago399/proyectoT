@@ -37,8 +37,10 @@ class Material extends Model
     function proveedor(){
         return $this->belongsTo(Proveedor::class);
     }
-
     function entradaMaterial(){
         return $this->belongsToMany(EntradaMaterial::class);
+    }
+    function materiales(){
+        return $this->hasMany(Material::class);
     }
 }

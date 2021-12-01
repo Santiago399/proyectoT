@@ -19,14 +19,11 @@ class CreateObrasTable extends Migration
             $table->date('fechaInicio');
             $table->date('fechaEntrega');
             $table->string('estado');
-            $table->string('cantidad');
             $table->string('descripcion');
-            $table->foreignId('cliente_id');
             $table->foreignId('categoria_id');
             $table->foreignId('usuario_id');
             $table->timestamps();
-
-            $table->foreign('cliente_id')->references('id')->on('clientes');
+            
             $table->foreign('categoria_id')->references('id')->on('categorias');
             $table->foreign('usuario_id')->references('id')->on('users');
 

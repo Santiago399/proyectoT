@@ -10,8 +10,37 @@
   <div class="content">
     <div class="row">
       <div class="col-md-12">
+        @if (session('success'))
+        <div class="alert alert-primary" >
+            {{session('success')}}
+        </div>
+        @endif
         <div class="card">
           <div class="card-header">
+            <div class="text-rigth">
+            <h6>Import Exel</h6>
+            </div>
+          </div>
+            <div class="card-body">
+              <form action="/obras/import" method="post" enctype="multipart/form-data">
+                @csrf
+
+                <div class="form-group">
+                  <input type="file" name="file" /> para importar da click aquí mismo
+     <br>
+                </div>
+                <button type="submit" class="btn btn-primary">Import</button>
+              </form>
+            </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header">
+            
             <div class="text-right">
                 @can('obras.create')
                 <a href="#" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#ModalCreate">Añadir obra</a>
@@ -28,15 +57,31 @@
                     <th>Nombre</th>
                     <th>Fecha Inicio</th>
                     <th>Fecha Entrega</th>
-                    <th>Estado</th>
                     <th>Descripcion</th>
-                    <th>Cantidad</th>
-                    <th>Cliente</th>
                     <th>Categoria</th>
                     <th>Usuario</th>
+                    <th>Estado</th>
                   <th class="text-right">Acciones</th>
                 </thead>
-
+                <tbody>
+                  @forelse ($obras as $obra )
+                  <tr>
+                    <td>{{ $obra->id }}</td>
+                    <td>{{ $obra->nombre }}</td>
+                    <td>{{ $obra->fechaInicio }}</td>
+                    <td>{{ $obra->fechaEntrega}}</td>
+                    <td>{{ $obra->descripcion}}</td>
+                    <td>{{ $obra->categoria->nombre }}</td>
+                    <td>{{ $obra->usuario_id}}</td>
+                    <td>{{ $obra->estado}}</td>
+                    <td class="text-right"> 
+                      <a href="{{ route('obras.edit', $obra->id)}}" class="btn btn-gray btn-sm btn-icon" > <i class="now-ui-icons ui-2_settings-90"></i></a>
+                    </td>
+                  </tr>
+                  @empty 
+                  No hay registros      
+                  @endforelse
+                </tbody>
               </table>
             </div>
           </div>
@@ -44,92 +89,8 @@
       </div>
     </div>
   </div>
-  @include('obras.modal.create')
-  @include('obras.modal.edit')
 @endsection
 
 @section('js')
-<script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js"></script>
-
-<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-@if (session('success') == ' eliminado correctamente')
-   <script>
-        Swal.fire(
-            '¡Eliminado!',
-            'Se ha eliminado con éxito.',
-            'success'
-            )
-    </script>
-
-@endif
-<script>
-    $('.formulario-eliminar').submit(function(e){
-        e.preventDefault();
-
-        Swal.fire({
-        title: '¿Estas seguro?',
-        text: "esta marca se eliminara definitivamente!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: '¡Sí, eliminar!',
-        cancelButtonText: 'Cancelar'
-        }).then((result) => {
-        if (result.isConfirmed) {
-            // Swal.fire(
-            // 'Deleted!',
-            // 'Your file has been deleted.',
-            // 'success'
-            // )
-
-            this.submit();
-        }
-      })
-    });
-    $('#obras').DataTable({
-                "language": {
-                "decimal": "",
-                "emptyTable": "No hay información",
-                "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
-                "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
-                "infoFiltered": "(Filtrado de _MAX_ total entradas)",
-                "infoPostFix": "",
-                "thousands": ",",
-                "lengthMenu": "Mostrar _MENU_ Entradas",
-                "loadingRecords": "Cargando...",
-                "processing": "Procesando...",
-                "search": "Buscar:",
-                "zeroRecords": "Sin resultados encontrados",
-                    "paginate": {
-                        "first": "Primero",
-                        "last": "Ultimo",
-                        "next": "Siguiente",
-                        "previous": "Anterior"
-                    }
-                },
-                "order": [[ 0, "asc" ]],
-                "processing": true,
-                "responsive": true,
-                "serverSide": true,
-                "ajax": "{{ route('ajax.request.obras')}}",
-                "columns":[
-                {"data":"id"},
-                {"data":"nombre"},
-                {"data":"fechaInicio"},
-                {"data":"fechaEntrega"},
-                {"data":"estado"},
-                {"data":"descripcion"},
-                {"data":"cantidad"},
-                {"data":"cliente"},
-                {"data":"categoria"},
-                {"data":"usuario"},
-                { "data": "accion",orderable:false, searchable:false },
-                ],
-
-    });
-</script>
 
 @endsection

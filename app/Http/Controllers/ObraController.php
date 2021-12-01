@@ -7,28 +7,30 @@ use App\Models\Cliente;
 use App\Models\Obra;
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Imports\ObrasImport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ObraController extends Controller
 {
     public function index(){
 
-        $clientes = Cliente::orderBy('nombre')->get();
+        
         $categorias = Categoria::orderBy('nombre')->get();
         $usuarios = User::orderBy('name')->get();
 
         $obras = Obra::paginate(10);
-        return view('obras.index', compact('obras','clientes', 'categorias', 'usuarios'));
+        return view('obras.index', compact('obras', 'categorias', 'usuarios'));
 
     }
 
     public function create(){
 
 
-        $clientes = Cliente::orderBy('nombre')->get();
+        
         $categorias = Categoria::orderBy('nombre')->get();
         $usuarios = User::orderBy('name')->get();
 
-        return view('obras.create',compact('clientes', 'categorias', 'usuarios'));
+        return view('obras.create',compact( 'categorias', 'usuarios'));
 
     }
     public function store(Request $request){
@@ -39,8 +41,6 @@ class ObraController extends Controller
             'fechaEntrega' => 'required|date',
             'estado' => 'required',
             'descripcion' => 'required|min:5|max:100|',
-            'cantidad' => 'required|numeric',
-            'cliente_id' => 'required',
             'categoria_id' => 'required',
             'usuario_id' => 'required',
 
@@ -54,6 +54,10 @@ class ObraController extends Controller
          return redirect()->route('obras.index')->with('success', 'Obra creada correctamente');
         //return redirect()->back(); // QUE CUANDO CREAA NOS REDIRECCIONE A LA VITA
 
+        $file = $request->file('file');
+
+        Excel::import(new ObrasImport, $file);
+        return back()->withStatus('Exel melo');
     }
 
     public function show(Obra $obra){
@@ -73,7 +77,7 @@ class ObraController extends Controller
     }
 
     public function update(Request $request, Obra $obra){
-        $data = $request->only('nombre', 'fechaInicio', 'fechaEntrega', 'estado', 'descripcion', 'cantidad', 'cliente_id', 'categoria_id', 'usuario_id');
+        $data = $request->only('nombre', 'fechaInicio', 'fechaEntrega', 'estado', 'descripcion', 'categoria_id', 'usuario_id');
 
         $obra->update($data);
         return redirect()->route('obras.index')->with('success', 'Obra actualizado correctamente');
@@ -86,39 +90,39 @@ class ObraController extends Controller
 
     }
 
-    public static function datatableObras(){
-        $query=Obra::all();
-        return datatables($query)
-        ->addColumn('accion',function($query){
-            $acciones = '<a href="javascript:void(0)" onclick="editarMaterial('.$query->id.')"  class="btn btn-gray btn-sm btn-icon"><i class="now-ui-icons ui-2_settings-90"></i></a>';
-            //  $html='<a href="#"  class="btn btn-gray btn-sm btn-icon" data-toggle="modal" data-target="#ModalEdit'.$query->id.'" ><i class="now-ui-icons ui-2_settings-90"></i></a>
+    // public static function datatableObras(){
+    //     $query=Obra::all();
+    //     return datatables($query)
+    //     ->addColumn('accion',function($query){
+    //         $acciones = '<a href="javascript:void(0)" onclick="editarMaterial('.$query->id.')"  class="btn btn-gray btn-sm btn-icon"><i class="now-ui-icons ui-2_settings-90"></i></a>';
+    //         //  $html='<a href="#"  class="btn btn-gray btn-sm btn-icon" data-toggle="modal" data-target="#ModalEdit'.$query->id.'" ><i class="now-ui-icons ui-2_settings-90"></i></a>
 
-            // <form action="'.route('obras.destroy', $query->id).'" method="delete" style="display: inline-block; " class="formulario-eliminar">
+    //         // <form action="'.route('obras.destroy', $query->id).'" method="delete" style="display: inline-block; " class="formulario-eliminar">
 
-            //     <button type="submit" rel="tooltip" class="btn btn-danger btn-sm btn-icon">
-            //         <i class="now-ui-icons ui-1_simple-remove"></i>
-            //     </button>
-            //      </form>';
-            //      return $html;
-            return $acciones;
-        })
-        ->addColumn('cliente',function($query){
-            $cliente=Cliente::obtenerDato($query->cliente_id);
+    //         //     <button type="submit" rel="tooltip" class="btn btn-danger btn-sm btn-icon">
+    //         //         <i class="now-ui-icons ui-1_simple-remove"></i>
+    //         //     </button>
+    //         //      </form>';
+    //         //      return $html;
+    //         return $acciones;
+    //     })
+    //     ->addColumn('cliente',function($query){
+    //         $cliente=Cliente::obtenerDato($query->cliente_id);
 
-            return $cliente;
-        })
-        ->addColumn('categoria',function($query){
-            $categoria=Categoria::obtenerDato($query->categoria_id);
+    //         return $cliente;
+    //     })
+    //     ->addColumn('categoria',function($query){
+    //         $categoria=Categoria::obtenerDato($query->categoria_id);
 
-            return $categoria;
-        })
-        ->addColumn('usuario',function($query){
-            $usuario=User::obtenerDato($query->usuario_id);
+    //         return $categoria;
+    //     })
+    //     ->addColumn('usuario',function($query){
+    //         $usuario=User::obtenerDato($query->usuario_id);
 
-            return $usuario;
-        })
+    //         return $usuario;
+    //     })
 
-        ->rawColumns(['accion','cliente','categoria','usuario'])
-        ->make(true);
-    }
+    //     ->rawColumns(['accion','cliente','categoria','usuario'])
+    //     ->make(true);
+    // }
 }

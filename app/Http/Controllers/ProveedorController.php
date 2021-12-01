@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Proveedor;
 use Illuminate\Http\Request;
-use UxWeb\SweetAlert\SweetAlert;
+use Validator;
+use App\Http\Requests\ProveedorRequest;
 
 class ProveedorController extends Controller
 {
@@ -21,25 +22,34 @@ class ProveedorController extends Controller
 
     }
 
-    public function store(Request $request){
+    public function store(ProveedorRequest $proveedor){
 
-        $request->validate([
-            'nombre' => 'required|regex:/^[A-Z][A-Z,a-z, ,á,é,í,ó,ü]+$/',
-            'apellido' => 'required|regex:/^[A-Z][A-Z,a-z, ,á,é,í,ó,ü]+$/',
-            'celular' =>'required|regex:/^[0-9]{10}$/|unique:proveedores',
-            'correo' => 'required|email|regex:/^[a-z,A-Z,0-9]+@[a-z,A-Z,0-9]+[.][a-zA-Z0-9-]+$/|unique:proveedores',
-            'clave' => 'required|numeric',
-            'estado' =>'required',
+        // $request->validate([
+        //     'nombre' => 'required|regex:/^[A-Zz][A-Z,a-z, ,á,é,í,ó,ü]+$/',
+        //     'apellido' => 'required|regex:/^[A-Z][A-Z,a-z, ,á,é,í,ó,ü]+$/',
+        //     'celular' =>'required|regex:/^[0-9]{10}$/|unique:proveedores',
+        //     'correo' => 'required|email|regex:/^[a-z,A-Z,0-9]+@[a-z,A-Z,0-9]+[.][a-zA-Z0-9-]+$/|unique:proveedores',
+        //     'clave' => 'required|numeric',
+        //     'estado' =>'required',
 
-        ]);
+        // ]);
+        $validator = Validator::make(
+            $proveedor->all(), 
+            $proveedor->rules(),
+            $proveedor->messages()
+            );
+            if ($validator->valid()) {
+                
+           
 
 
-        Proveedor::create($request->all());
+        Proveedor::create($proveedor->all());
 
-        SweetAlert::success('proveedor creado correctamente !');
+        
 
-        return redirect()->route('proveedores.index');
+        return redirect()->route('proveedores.index')->with('success', 'correctamente');
         // return redirect()->back(); // QUE CUANDO CREAA NOS REDIRECCIONE A LA VITA
+    }
 
     }
 

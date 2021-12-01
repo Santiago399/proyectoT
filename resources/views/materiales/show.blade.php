@@ -1,83 +1,54 @@
-@extends('layouts.main', ['title' => __('Detalles del Tipo material')])
+@extends('layouts.main', [
+    'class' => 'sidebar-mini ',
+    'namePage' => 'User Profile',
+    'activePage' => 'profile',
+    'activeNav' => '',
+])
 
 @section('content')
-
-<div class="content">
-  <div class="container-fluid">
+  <div class="panel-header panel-header-sm">
+  </div>
+  <div class="content">
     <div class="row">
       <div class="col-md-12">
         <div class="card">
-          <div class="card-header card-header-primary">
-            <div class="card-title">Usuarios</div>
-            <p class="card-category">Vista detallada de usuarios {{ $material->nombre }}</p>
+          <div class="card-header">
+            <h5 class="title">{{__("Detalle del Material -")}}  <td>{{ $material->nombre }}</td></h5>
           </div>
-          <!-- body -->
-           <div class="card-body">
-            <div class="row">
-              {{-- <div class="col-md-4">
-                <div class="card card-user">
-                  <div class="card-body">
-                    <p class="card-text">
-                      <div class="author">
-                        <a href="#">
-                          <img src="{{ asset('/img/theme/team-1.jpg') }}" alt="imagen" class="avatar">
-                          <h5 class="title mt-3"> Nombre: {{ $material->name }}</h5>
-                        </a>
-                        <p class="descripcion">
-                           Correo: {{ $material->email }}   <br>
-                           Fecha de creación: {{ $material->created_at }}  <br>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table" id="materiales">
+                <thead class=" text-primary">
+                  <tr>
+                
+                      <td>Nombre</td>
+                      <td>Peso</td>
+                      <td>Tamaño</td>
+                      <td>Cantidad</td>
+                      <td>tipo ID</td>
+                      <td>Marca ID</td>
+                      <td>Estado</td>
+                    
+                    
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>{{ $material->nombre }}</td>
+                <td>{{ $material->peso }}</td>
+                <td>{{ $material->tamaño }}</td>
+                <td>{{ $material->cantidad }}</td>
+                <td>{{ $material->tipo->nombre }}</td>
+                <td>{{ $material->marca->nombre }}</td>
+                <td>{{ $material->estado }}</td>
+                  </tr>
+                </tbody>
+              </table>
 
-                        </p>
-                      </div>
-                    </p>
-                    <div class="card-descripcion">
-                       Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio deleniti error quidem, aliquam neque asperiores dolorem id reprehenderit inventore minima qui, maxime, earum enim repellat laboriosam vel laborum cumque voluptatem.
-                    </div>
-                  </div>
-                  <div class="card-footer">
-                    <div class="button-container">
-                      <button class="btn btn-sm btn-primary">Editar</button>
-                    </div>
-                  </div>
-                </div>
-              </div>  --}}
-{{-- sugundo card --}}
-              <div class="col-md-4">
-                <div class="card card-user">
-                  <div class="card-body">
-                    <p class="card-text">
-                      <div class="author">
-                        <a href="#" class="d-flex">
-                          <img src="{{ asset('/img/theme/team-1.jpg') }}" alt="imagen" class="avatar">
-                          <h5 class="title mx-3"> Nombre: {{ $material->tamaño }}</h5>
-                        </a>
-                        <p class="descripcion">
-                           Correo: {{ $material->cantidad }}   <br>
-                           Fecha de creación: {{ $material->created_at }}  <br>
-
-                        </p>
-                      </div>
-                    </p>
-                    <div class="card-descripcion">
-                       Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio deleniti error quidem, aliquam neque asperiores dolorem id reprehenderit inventore minima qui, maxime, earum enim repellat laboriosam vel laborum cumque voluptatem.
-                    </div>
-                  </div>
-                  <div class="card-footer">
-                    <div class="button-container">
-                        <a href="{{ route('materiales.index') }}" class="btn btn-sm btn-success mr-3" >Volver</a>
-                      <button class="btn btn-sm btn-primary">Editar</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
-
-
-
 @endsection

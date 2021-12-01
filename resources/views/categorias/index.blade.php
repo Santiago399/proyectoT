@@ -11,18 +11,57 @@
     <div class="row">
       <div class="col-md-12">
         <div class="card">
+            <div class="card-header">
+                <h5 class="title">{{__("Añadir Nueva categoria")}}</h5>
+            </div>
+            <div class="card-body">
+                <form action="{{ route('categorias.store') }}" method="post" class="form-horizontal">
+                  @csrf
+                  {{-- @foreach ($categorias as $categoria)
+                  <input type="hidden" name="id" value="{{$categorias->id}}">
+                  
+                  @endforeach --}}
+                    @if (session('status'))
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            {{ session('status') }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    @endif
+                
+                    <div class="pl-lg-4">
+                        <div class="form-group{{ $errors->has('nombre') ? ' has-danger' : '' }}">
+                            <label class="form-control-label" for="input-name">{{ __('Nombre') }}</label>
+                            <input type="text" name="nombre" id="input-name" class="form-control form-control-alternative{{ $errors->has('nombre') ? ' is-invalid' : '' }}">                
+                            @if ($errors->has('nombre'))
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $errors->first('nombre') }}</strong>
+                                </span>
+                            @endif
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-success mt-4">{{ __('Guardar') }}</button>
+                        </div>
+                    </div>
+                
+                </form>
+            </div>
+          </div>
+        </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
           <div class="card-header">
             <div class="text-right">
-                @can('categorias.create')
-                <a href="#" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#ModalCreat">Añadir Categoria</a>
-
-                @endcan
               </div>
             <h4 class="card-title"> Categorias </h4>
           </div>
           <div class="card-body">
             <div class="table-responsive">
-              <table class="table">
+              @csrf
+              <table id="editable" class="table table-bordered table-striped">
                 <thead class=" text-primary">
                   <tr>
                     <th>ID</th>
@@ -30,88 +69,77 @@
                   <th class="text-right">Acciones</th>
                 </thead>
                 <tbody>
-                  @forelse ($categorias as $categoria )
+                  @foreach  ($categorias as $categoria)
                   <tr>
-                    <td>{{ $categoria->id }}</td>
-                    <td>{{ $categoria->nombre }}</td>
-                    <td class="text-right" >
-                        @can('categorias.edit')
-                        <a href="#"  class="btn btn-gray btn-sm btn-icon" data-toggle="modal" data-target="#ModalEdit{{ $categoria->id}}" ><i class="now-ui-icons ui-2_settings-90"></i></a>
-
-                        @endcan
-                        @can('categorias.destroy')
-                        <form action="{{ route('categorias.destroy', $categoria->id) }}" method="post" style="display: inline-block; " class="formulario-eliminar">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" rel="tooltip" class="btn btn-danger btn-sm btn-icon">
-                                <i class="now-ui-icons ui-1_simple-remove"></i>
-                            </button>
-                      </form>
-                        @endcan
-                      </td>
-                      @include('categorias.modal.edit')
+                    <td class="id">{{ $categoria->id }}</td>
+                    <td class="nombre">{{ $categoria->nombre }}</td>
+                    <td class="text-center">
+                      @can('categorias.edit')
+                      <a href="m-r-15 text-muted update" data-toggle="modal" data-id=".$categoria->id ." data-target="#update" class="btn btn-gray btn-sm btn-icon"> 
+                        <i class="now-ui-icons ui-2_settings-90"></i>
+                      </a>
+                      @endcan
+                      @can('categorias.destroy')
+                      <a href="" class="btn btn-danger btn-sm btn-icon" onclick="return confirm('Are you sure want to delete it?')">
+                        <i class="now-ui-icons ui-1_simple-remove"></i></a>
+                    </td>
+                    @endcan
                     </tr>
-                    @empty
-                    No hay registros
-                    @endforelse
+                    @endforeach
                 </tbody>
               </table>
             </div>
           </div>
-          <div class="card-footer mr-auto">
-              {{ $categorias->links() }}
-          </div>
+          
         </div>
       </div>
     </div>
   </div>
-  @include('categorias.modal.create')
+  {{-- modal update --}}
+  <div class="modal fade" id="update" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <form action="" id="update" method="post">
+            {{ csrf_field() }}
+        </div>
+        <div class="modal-body">
+          <input type="hidden" class="form-control" id="e_id" name="id" value=""/>
+          <div class="modal-body">
+              <div class="form-group row">
+                <label for="" class="col-sm-3 col-form-label"> Nombre </label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" id="e_nombre" name="nombre" value=""/>
+                </div>
+              </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </form>
+      </div>
+    </div>
+  </div>
+  
+  {{-- end modal update --}}
 @endsection
 
 @section('js')
-
-<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-@if (session('success') == ' eliminado correctamente')
-   <script>
-        Swal.fire(
-            '¡Eliminado!',
-            'Se ha eliminado con éxito.',
-            'success'
-            )
-    </script>
-
-@endif
-
 <script>
-
-    $('.formulario-eliminar').submit(function(e){
-        e.preventDefault();
-
-        Swal.fire({
-        title: '¿Estas seguro?',
-        text: "esta marca se eliminara definitivamente!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: '¡Sí, eliminar!'
-        cancelButtonText: 'Cancelar'
-        }).then((result) => {
-        if (result.isConfirmed) {
-            // Swal.fire(
-            // 'Deleted!',
-            // 'Your file has been deleted.',
-            // 'success'
-            // )
-
-            this.submit();
-        }
-        })
-    });
-
-
+  $(document).on('click','update',function()
+  {
+    var_this = $(this).parents('tr');
+    $('$e_id').val(_this.find('.id').text())
+    $('$e_nombre').val(_this.find('.nombre').text())
+  });
 </script>
+
 
 @endsection
 

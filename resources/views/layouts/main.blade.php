@@ -20,6 +20,7 @@
   <link href="{{ asset('/css/now-ui-dashboard.css') }}" rel="stylesheet" />
   <!-- CSS Just for demo purpose, don't include it in your project -->
   <link href="{{ asset('/demo/demo.css') }}" rel="stylesheet" />
+ 
   @yield('css')
 
   @livewireStyles
@@ -35,6 +36,7 @@
       @include('layouts.page_template.guest')
     @endguest
   </div>
+
   <!--   Core JS Files   -->
   <script src="{{ asset('/js/core/jquery.min.js') }}"></script>
   <script src="{{ asset('/js/core/popper.min.js') }}"></script>
@@ -49,10 +51,18 @@
   <script src="{{ asset('/js/now-ui-dashboard.min.js') }}" type="text/javascript"></script>
   <!-- Now Ui Dashboard DEMO methods, don't include it in your project! -->
   <script src="{{ asset('/demo/demo.js') }}"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
+  <!-- library js validate -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
   @stack('js')
   @yield('js')
-  @livewireScripts
-
+  @include('sweetalert::alert')
 </body>
 
 </html>

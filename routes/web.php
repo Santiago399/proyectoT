@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\UserImportExportController;
+use App\Http\Controllers\ObrasImportController;
+use App\Http\Controllers\ObraController;
 use Illuminate\Auth\Events\Verified;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -46,10 +49,21 @@ Route::group( ['middleware' => 'auth', 'Verified'], function(){
     Route::resource('permissions', App\Http\Controllers\PermissionController::class)->names('permissions');
     Route::resource('roles', App\Http\Controllers\RolController::class)->names('roles');
 
+    Route::resource('pedidos', App\Http\Controllers\PedidoController::class)->names('pedidos');
     // Route::get('datatable/usuarios', 'DatatableController@Usuario')->name('datatable.usuario');
     Route::get('ajax/request/materiales',[App\Http\Controllers\MaterialController::class,'datatableMateriales'])->name('ajax.request.materiales');
     Route::get('ajax/request/obras',[App\Http\Controllers\ObraController::class,'datatableObras'])->name('ajax.request.obras');
     Route::get('ajax/request/marcas',[App\Http\Controllers\MarcaController::class,'datatableMarcas'])->name('ajax.request.marcas');
+
+    Route::get('export-file',[UserImportExportController::class, 'exportFile'])->name('export-file');
+    Route::post('import-file',[UserImportExportController::class, 'importFile'])->name('import-file');
+
+    Route::get('export-materiales',[UserImportExportController::class, 'exportFileMateriales'])->name('export-materiales');
+    Route::post('import-materiales',[UserImportExportController::class, 'importFileMateriales'])->name('import-materiales');
+
+    Route::get('/obras/import', [ObrasImportController::class, 'show']);
+    Route::post('/obras/import', [ObrasImportController::class, 'store']);
+
 
 });
 

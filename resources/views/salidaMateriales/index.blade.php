@@ -12,7 +12,62 @@
       <div class="col-md-12">
           <div class="card">
               <div class="card-body">
-                <form method="post" action="{{ route('salidaMateriales.store') }}" autocomplete="off">
+                <form action="{{ route('salidaMateriales.store') }}" method="POST">
+                  @csrf
+                  <div class="panel panel-footer">
+                    <table id="emptbl" class="table table-bordered">
+                      <thead>
+                        <tr>
+                          <th>Material</th>
+                          <th>Salida id</th>
+                          <th>Cantidad</th>
+                          <th>Estado</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td id="col0">
+                            <select name="material_id[]" id="material_id" class="form-control form-control-alternative{{ $errors->has('material_id') ? ' is-invalid' : '' }}">
+                              <option value="">--Escoja  el material --</option>
+                              @foreach ($materiales as $material)
+                              <option value="{{ $material['id'] }}">{{ $material['nombre'] }}</option>
+  
+                              @endforeach
+                          </select>
+                          </td>
+                          <td id="col1">
+                            <select name="salida_id[]" id="salida_id" class="form-control form-control-alternative{{ $errors->has('entrada_id') ? ' is-invalid' : '' }}">
+                              <option value="">--Escoja  la salida--</option>
+                              @foreach ($salidas as $salida)
+                              <option value="{{ $salida['id'] }}">{{ $salida['fecha'] }}</option>
+  
+                              @endforeach
+                          </select>
+                          </td>
+                          
+                          <td id="col2">
+                            <input type="number" name="cantidad[]" id="cantidad" class="form-control form-control-alternative{{ $errors->has('cantidad') ? ' is-invalid' : '' }}" placeholder="{{ __('Ingrese el cantidad') }}" value="{{ old('cantidad') }}">
+                          </td>
+                          <td id="col3">
+                            <input type="text" name="estado[]" id="estado" class="form-control form-control-alternative{{ $errors->has('estado') ? ' is-invalid' : '' }}" placeholder="{{ __('Ingrese el estado') }}" value="{{ old('estado') }}" >
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <table>
+                      <br>
+                      <tr>
+                        <tr>
+                          <td><button type="button" class="btn btn-sm btn-info " onclick="addRows()">Agregar</button></td>
+                          <td><button type="button" class="btn btn-sm btn-danger " onclick="deleteRows()">Rewmover</button></td>
+                          <td><button type="submit" class="btn btn-sm btn-primary" >save</button></td>
+                        </tr>
+                      </tr>
+                    </table>
+                  </div>
+                </form>
+
+                {{-- <form method="post" action="{{ route('salidaMateriales.store') }}" autocomplete="off">
                     <div class="card-body">
                         @csrf
                         @include('alerts.success')
@@ -27,11 +82,11 @@
                                     </span>
                                 @endif
                             </div>
-                            {{-- <div class="form-group{{ $errors->has('material_id') ? ' has-danger' : '' }}">
+                            <div class="form-group{{ $errors->has('material_id') ? ' has-danger' : '' }}">
                                 <label class="form-control-label" for="input-name">{{ __('Seleccione el material') }}</label>
                                 <select name="material_id" id="material_id" class="form-control form-control-alternative{{ $errors->has('material_id') ? ' is-invalid' : '' }}">
                                     <option value="">--Escoja  el material --</option>
-                                    @foreach ($entradaMateriales as $material_ent)
+                                    @foreach ($salidaMateriales as $material_ent)
                                     <option value="{{ $material_ent->id }}">{{ $material_ent->nombre }} - Disponible: {{$material_ent->cantidad}}</option>
 
                                     @endforeach
@@ -42,7 +97,7 @@
                                     </span>
                                 @endif
 
-                            </div> --}}
+                            </div>
                             <div class="form-group{{ $errors->has('material_id') ? ' has-danger' : '' }}">
                                 <label class="form-control-label" for="input-name">{{ __('material_id') }}</label>
                                 <select name="material_id" id="material_id" class="form-control form-control-alternative{{ $errors->has('material_id') ? ' is-invalid' : '' }}">
@@ -94,7 +149,7 @@
                             </div>
                         </div>
                         </div>
-                </form>
+                </form> --}}
               </div>
           </div>
         <div class="card">
@@ -142,7 +197,6 @@
                         @endcan
 
                       </td>
-                      @include('SalidaMateriales.modal.edit')
                     </tr>
                     @empty
                     No hay registros
@@ -158,5 +212,76 @@
       </div>
     </div>
   </div>
-  @include('salidaMateriales.modal.create')
+
+@endsection
+@section('js')
+
+<script>
+  function addRows()
+  { 
+      var table = document.getElementById('emptbl');
+      var rowCount = table.rows.length;
+      var cellCount = table.rows[0].cells.length; 
+      var row = table.insertRow(rowCount);
+      for(var i =0; i <= cellCount; i++)
+      {
+          var cell = 'cell'+i;
+          cell = row.insertCell(i);
+          var copycel = document.getElementById('col'+i).innerHTML;
+          cell.innerHTML=copycel;
+      }
+  }
+
+  function deleteRows()
+  {
+      var table = document.getElementById('emptbl');
+      var rowCount = table.rows.length;
+      if(rowCount > '2')
+      {
+          var row = table.deleteRow(rowCount-1);
+          rowCount--;
+      }else{
+        Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'No puedes eliminar la última fila',
+      });
+      }
+  }
+</script>
+
+  {{-- <script>
+    
+    $('.addRow').on('click',function(){
+      addRow();
+    });
+    function addRow(){
+      var tr='<tr>'+
+        '<td><select name="material_id[]" id="material_id[]" class="form-control form-control-alternative{{ $errors->has('material_id') ? ' is-invalid' : '' }}"><option value="">--Escoja  el material --</option>@foreach ($materiales as $material)<option value="{{ $material['id'] }}">{{ $material['nombre'] }}</option>@endforeach</select></td>'+
+        '<td><select name="entrada_id[]" id="entrada_id[]" class="form-control form-control-alternative{{ $errors->has('entrada_id') ? ' is-invalid' : '' }}"><option value="">--Escoja  el entrada --</option>@foreach ($entradas as $entrada)<option value="{{ $entrada['id'] }}">{{ $entrada['fecha'] }}</option> @endforeach</select></td>'+
+        ' <td><input type="number" name="cantidad[]" id="cantidad" class="form-control form-control-alternative{{ $errors->has('cantidad') ? ' is-invalid' : '' }}" placeholder="{{ __('Ingrese el cantidad') }}" value="{{ old('cantidad') }}"></td>'+
+        '<td><input type="text" name="estado[]" id="estado[]" class="form-control" placeholder="{{ __('Ingrese el estado') }}" value="{{ old('estado') }}" ></td>'+
+        '<td><a href="#" class="btn btn-danger remove"><i class="now-ui-icons ui-1_simple-remove"></i></a></td>'+
+        '</tr>';
+    $('tbody').append(tr);
+    };
+    
+    $('tbody').on('click', '.remove', function(){
+      var last=$('tbody tr').length;
+      if(last==1){
+        Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'No puedes eliminar la última fila',
+      });
+        
+      }
+      else{
+        $(this).parent().parent().remove();
+      }
+     
+  });
+
+
+  </script> --}}
 @endsection
