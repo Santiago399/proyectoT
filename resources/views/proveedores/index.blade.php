@@ -26,7 +26,7 @@
                         <label class="form-control-label" for="">{{ __('Nombre') }}</label>
                         <input type="text" name="nombre" id="nombre" 
                         class="form-control form-control-alternative{{ $errors->has('nombre') ? ' is-invalid' : '' }}"
-                         placeholder="{{ __('(required, at least 3 characters)') }}" 
+                         placeholder="{{ __('Ingrese su nombre') }}" 
                          value="{{ old('nombre') }}" minlength="3" >
     
                         @if ($errors->has('nombre'))
@@ -39,7 +39,7 @@
                       <label class="form-control-label" for="">{{ __('apellido') }}</label>
                       <input type="text" name="apellido" id="apellido"
                        class="form-control form-control-alternative{{ $errors->has('apellido') ? ' is-invalid' : '' }}" 
-                       placeholder="{{ __('Ingrese el apellido de la marca ') }}" 
+                       placeholder="{{ __('Ingrese el apellido ') }}" 
                        value="{{ old('apellido') }}" minlength="3" >
   
                       @if ($errors->has('apellido'))
@@ -53,7 +53,7 @@
                         <input type="number" name="celular" id="celular" 
                         class="form-control form-control-alternative{{ $errors->has('celular') ? ' is-invalid' : '' }}" 
                         placeholder="{{ __('Celular (10 dijitos) ') }}" 
-                        value="{{ old('celular') }}" minlength="10" maxlength="10" >
+                        value="{{ old('celular') }}">
     
                         @if ($errors->has('celular'))
                             <span class="invalid-feedback" role="alert">
@@ -76,21 +76,13 @@
                         </span>
                     @endif
                 </div>
-                <div class="col-md-4 form-group{{ $errors->has('clave') ? ' has-danger' : '' }}">
-                  <label class="form-control-label" for="">{{ __('clave') }}</label>
-                  <input type="password" name="clave" id="clave" class="form-control form-control-alternative{{ $errors->has('clave') ? ' is-invalid' : '' }}" placeholder="{{ __('Ingrese el clave de la marca ') }}" value="{{ old('clave') }}">
-
-                  @if ($errors->has('clave'))
-                      <span class="invalid-feedback" role="alert">
-                          <strong>{{ $errors->first('clave') }}</strong>
-                      </span>
-                  @endif
-              </div>
                 <div class="form-group col-md-3{{ $errors->has('estado') ? ' has-danger' : '' }}">
                                 <label for="estado">Estado:</label>
                                 <select class="form-control" id="estado" name="estado">
-                                <option value="Pendiente">Activo</option>
-                                <option value="Entregado">Inactivo</option>
+                                <option value="Activo">Activo</option>
+                                @can('usuarios.index')
+                                <option value="Inactivo">Inactivo</option>
+                                @endcan
                               </select>
                             @if ($errors->has('estado'))
                                 <span class="invalid-feedback" role="alert">
@@ -127,7 +119,7 @@
               <table class="table">
                 <thead class=" text-primary">
                   <tr>
-                    <th>ID</th>
+                    <th hidden>ID</th>
                     <th>Nombre</th>
                     <th>Apellido</th>
                     <th>Celular</th>
@@ -138,7 +130,7 @@
                 <tbody>
                   @forelse ($proveedores as $proveedor )
                   <tr>
-                    <td>{{ $proveedor->id }}</td>
+                    <td hidden>{{ $proveedor->id }}</td>
                     <td>{{ $proveedor->nombre }}</td>
                     <td>{{ $proveedor->apellido }}</td>
                     <td>{{ $proveedor->celular }}</td>
@@ -146,7 +138,7 @@
                     <td>{{ $proveedor->estado }}</td>
                     <td class="text-right" >
                         @can('proveedores.edit')
-                        <a href="#"  class="btn btn-gray btn-sm btn-icon" data-toggle="modal" data-target="#ModalEdit{{ $proveedor->id}}" > <i class="now-ui-icons ui-2_settings-90"></i></a>
+                        <a href="{{ route('proveedores.edit', $proveedor->id)}}"  class="btn btn-gray btn-sm btn-icon"><i class="now-ui-icons ui-2_settings-90"></i></a>
                         @endcan
                         @can('proveedores.destroy')
                         <form action="{{ route('proveedores.destroy', $proveedor->id) }}" method="post" style="display: inline-block; " class="formulario-eliminar">
@@ -177,49 +169,45 @@
 @endsection
 
 @section('js')
-{{-- <script>
-    $(function() {
-      $('#proveedor').submit(function(e) {
 
-        var fields = $(this).serialize();
-        $.post("{{ url('/proveedores') }}", fields, function(data) {
+@if (session('satisfactoriamente') == 'Se elimino con éxito.')
+    <script>
+      Swal.fire(
+      '¡Eliminado!',
+      'El registro se elimino con éxito.',
+      'success'
+    )
+    </script>
+@endif
+<script>
 
-          if(data.valid !==undefined){
-            $("#result").html("Enora buena form enviado correctamenre");
-            $("#proveedor"[0].resent());
-            $("#nombre").html('');
-            $("#apellido").html('');
-            $("#celular").html('');
-            $("#correo").html('');
-            $("#estado").html('');
-          }
-          else{
-            $("#nombre").html('');
-            $("#apellido").html('');
-            $("#celular").html('');
-            $("#correo").html('');
-            $("#estado").html('');
-            if (data.nombre !== undefined) {
-              $("#nombre").html(data.nombre);
-            }
-            if (data.apellido !== undefined) {
-              $("#apellido").html(data.apellido);
-            }
-            if (data.celular !== undefined) {
-              $("#celular").html(data.celular);
-            }
-            if (data.correo !== undefined) {
-              $("#correo").html(data.correo);
-            }
-            if (data.estado !== undefined) {
-              $("#estado").html(data.estado);
-            }
-          }
-        });
-        return false;
-      });
-    });
-
-</script> --}}
-
-@endsection 
+  $('.formulario-eliminar').submit(function (e) {
+    e.preventDefault();
+  
+  
+    Swal.fire({
+    title: '¿Estas seguro?',
+    text: "¡El registro se eliminara definitivamente!",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: '¡Si, eliminar!',
+    cancelButtonText: 'Cancelar',
+  }).then((result) => {
+    if (result.isConfirmed) {
+      // Swal.fire(
+      //   'Deleted!',
+      //   'Your file has been deleted.',
+      //   'success'
+      // )
+  
+      this.submit();
+    }
+  })
+    
+  });
+  
+  </script>
+      
+  @endsection

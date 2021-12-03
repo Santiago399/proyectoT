@@ -6,6 +6,10 @@ use App\Models\EntradaMaterial;
 use App\Models\Entrada;
 use App\Models\Material;
 use DB;
+use RealRashid\SweetAlert\Facades\Alert;
+
+
+
 
 use Illuminate\Http\Request;
 
@@ -33,39 +37,13 @@ class EntradaMaterialController extends Controller
 
     public function store(Request $request){
 
-
-        // $cant_permitida=EntradaMaterial::getCant($request->material_id);
         // $request->validate([
         //     'estado' => 'required',
-        //     'cantidad' => 'required|numeric',
+        //     'cantidad' => 'required|numeric|min:1|max:1000',
         //     'material_id' => 'required',
         //     'entrada_id' => 'required',
         // ]);
-
-        // if(intval($request->nuevaCantidad)){
-        //     return redirect()->route('entradaMateriales.index')->with('true', 'cantida rehistrada');
-        // }else{
-            //  EntradaMaterial::create($request->all());
-            // $data = EntradaMaterial::create($request->all());
-            // $material = Material::create($data)->id;
-            // $entrada = Entrada::create($data)->id;
-            // if (count($request->estado) > 0) {
-                
-            
-            //     foreach ($request->estado as $key=>$insert) {
-                    
-            //         $data = array(
-            //             'estado' => $request->$estado[$key],
-            //             'cantidad' => $request->$cantidad[$key],
-            //             'material_id' => $request->$material_id[$key],
-            //             'entrada_id'=> $request->$entrada_id[$key],
-            //         );
-                    
-            //         // DB::table('entrada_materiales')->insert($data);  
-            //         EntradaMaterial::insert($data);
-            //     }
-            // }
-
+        
             $material_id = $request->material_id;
             $entrada_id = $request->entrada_id;
             $cantidad = $request->cantidad;
@@ -82,13 +60,12 @@ class EntradaMaterialController extends Controller
             $materiales = Material::findOrFail($request->material_id);
             // dd($request->cantidad);
             foreach ($materiales as $indice=> $material){       
-               $material->cantidad = $material->cantidad +intval( $request->cantidad[$indice]);
+               $material->cantidad = $material->cantidad + intval( $request->cantidad[$indice]);
                 $material->save(); 
                 
             }
-            
-            
-            return redirect()->route('entradaMateriales.index')->with('success', 'SALIDA MATERIAL creada correctamente');
+            Alert::success('Registrado', 'Se ha registrado correctamente');   
+            return redirect()->route('entradaMateriales.index');
            //return redirect()->back(); // QUE CUANDO CREAA NOS REDIRECCIONE A LA VITA
     }
 

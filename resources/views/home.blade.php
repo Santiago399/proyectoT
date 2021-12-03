@@ -81,7 +81,7 @@ padding-bottom: 45px;">
           <div class="card-footer ">
             <hr>
             <div class="stats">
-              <i class="now-ui-icons loader_refresh spin"></i> Updated 3 minutes ago
+              {{-- <i class="now-ui-icons loader_refresh spin"></i> Updated 3 minutes ago --}}
             </div>
           </div>
         </div>
@@ -113,13 +113,9 @@ padding-bottom: 45px;">
 @endsection
 
 @push('js')
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
 
-<script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js"></script>
 
-<script>
+{{-- <script>
     $('#obras').DataTable({
                 "language": {
                 "decimal": "",
@@ -155,7 +151,7 @@ padding-bottom: 45px;">
                 ],
 
     });
-</script>
+</script> --}}
 
 <script>
 const ctx = document.getElementById('entradas_grafico').getContext('2d');

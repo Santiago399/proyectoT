@@ -36,8 +36,19 @@
                                     </span>
                                 @endif
                             </div>
+                            <div class="form-group col-md-4{{ $errors->has('description') ? ' has-danger' : '' }}">
+                                <label class="form-control-label" for="description">{{ __('descripcion del permiso') }}</label>
+                                <input type="text" name="description" id="description" class="form-control form-control-alternative{{ $errors->has('description') ? ' is-invalid' : '' }}" value="{{  old('description', $permission->description )}}"  autofocus>
+                        
+                                @if ($errors->has('description'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('description') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
 
                             <div class="text-center">
+                                <a href="{{ route('permissions.index')}}" class="btn btn-danger"> Cancelar</a>
                                 <button type="submit" class="btn btn-success mt-4">{{ __('Actualizar') }}</button>
                             </div>
                         </div>

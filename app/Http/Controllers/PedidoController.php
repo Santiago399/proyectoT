@@ -6,6 +6,10 @@ use App\Models\Pedido;
 use App\Models\Material;
 use PDF;
 use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
+
+
+
 
 class PedidoController extends Controller
 {
@@ -49,8 +53,10 @@ class PedidoController extends Controller
         // $pedidos -> descripcion =$request-> descripcion;
         // $pedidos -> estado =$request-> estado;
         // $pedidos->save();
-        Pedido::create($request->all());
 
+
+        Pedido::create($request->all());
+        Alert::success('Registrado', 'Se ha registrado correctamente');
         return redirect("/pedidos");
     }
 
@@ -62,7 +68,7 @@ class PedidoController extends Controller
      */
     public function show($id)
     {
-        $pedidos = Pedido::findorFail($id);
+        $pedidos = Pedido::findOrFail($id);
         return view("pedidos.show", compact("pedidos"));
     }
 
@@ -75,7 +81,7 @@ class PedidoController extends Controller
     public function edit($id)
     {
         $materiales = Material::orderBy('nombre')->get();
-        $pedidos = Pedido::findorFail($id);
+        $pedidos = Pedido::findOrFail($id);
         return view("pedidos.edit", compact('pedidos', 'materiales'));
     }
 
@@ -90,6 +96,7 @@ class PedidoController extends Controller
     {
         $pedidos = Pedido::findOrFail($id);
         $pedidos->update($request->all());
+        Alert::success('Actualizado', 'Se actualizado correctamente');
         return redirect("/pedidos");
     }
 
@@ -103,7 +110,7 @@ class PedidoController extends Controller
     {
         $pedidos = Pedido::findOrFail($id);
         $pedidos ->delete();
-        return redirect("/pedidos");
+        return redirect("/pedidos")->with('satisfactoriamente', 'Se elimino con éxito.');
     }
 
     public function downloadPDF()

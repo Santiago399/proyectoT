@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "51020675e53b9d923e1653b4e4f1b0c0",
+    "content-hash": "17ee5f81316dc82e556df5366b14801d",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -240,6 +240,62 @@
                 }
             ],
             "time": "2021-08-15T20:50:18+00:00"
+        },
+        {
+            "name": "clarkeash/doorman",
+            "version": "v6.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/clarkeash/doorman.git",
+                "reference": "e77575340fa716c504234703c282a49abd793061"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/clarkeash/doorman/zipball/e77575340fa716c504234703c282a49abd793061",
+                "reference": "e77575340fa716c504234703c282a49abd793061",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/framework": "^8.0",
+                "php": "^7.3|^8.0",
+                "ramsey/uuid": "^4.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1.4",
+                "orchestra/testbench": "^6.0",
+                "phpunit/phpunit": "^9.3"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Clarkeash\\Doorman\\Providers\\DoormanServiceProvider"
+                    ],
+                    "aliases": {
+                        "Doorman": "Clarkeash\\Doorman\\Facades\\Doorman"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Clarkeash\\Doorman\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ashley Clarke",
+                    "email": "me@ashleyclarke.me"
+                }
+            ],
+            "support": {
+                "issues": "https://github.com/clarkeash/doorman/issues",
+                "source": "https://github.com/clarkeash/doorman/tree/v6.1.0"
+            },
+            "time": "2020-12-16T20:16:26+00:00"
         },
         {
             "name": "dasprid/enum",

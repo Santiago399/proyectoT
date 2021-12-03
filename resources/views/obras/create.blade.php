@@ -69,32 +69,6 @@
                     </span>
                 @endif
             </div>
-            <div class="form-group{{ $errors->has('cantidad') ? ' has-danger' : '' }}">
-                <label class="form-control-label" for="input-name">{{ __('cantidad') }}</label>
-                <input type="text" name="cantidad" id="input-name" class="form-control form-control-alternative{{ $errors->has('cantidad') ? ' is-invalid' : '' }}" placeholder="{{ __('Ingrese el cantidade de la marca ') }}" value="{{ old('cantidad') }}" autofocus>
-
-                @if ($errors->has('cantidad'))
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $errors->first('cantidad') }}</strong>
-                    </span>
-                @endif
-            </div>
-            <div class="form-group{{ $errors->has('cliente_id') ? ' has-danger' : '' }}">
-                <label class="form-control-label" for="input-name">{{ __('cliente_id') }}</label>
-                <select name="cliente_id" id="cliente_id" class="form-control form-control-alternative{{ $errors->has('cliente_id') ? ' is-invalid' : '' }}">
-                    <option value="">--Escoja la --</option>
-                    @foreach ($clientes as $cliente)
-                    <option value="{{ $cliente['id'] }}">{{ $cliente['nombre'] }}</option>
-
-                    @endforeach
-                </select>
-                @if ($errors->has('cliente_id'))
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $errors->first('cliente_id') }}</strong>
-                    </span>
-                @endif
-
-            </div>
             <div class="form-group{{ $errors->has('categoria_id') ? ' has-danger' : '' }}">
                 <label class="form-control-label" for="input-name">{{ __('categoria_id') }}</label>
                 <select name="categoria_id" id="categoria_id" class="form-control form-control-alternative{{ $errors->has('categoria_id') ? ' is-invalid' : '' }}">

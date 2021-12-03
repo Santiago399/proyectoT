@@ -32,7 +32,7 @@ class UsuarioController extends Controller
     public function store( UserCreateRequest $request){
 
         $request->validate([
-            'name' => 'required|min:3|max:10',
+            'name' => 'required|min:3|max:30',
             'email' => 'required|email|unique:users',
             'password' =>'required',
 

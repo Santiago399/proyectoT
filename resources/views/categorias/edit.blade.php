@@ -1,52 +1,44 @@
-@extends('layouts.main', ['page' => __('Editar categorias'), 'pageSlug' => 'Editar categorias'])
-
+@extends('layouts.main', [
+    'class' => 'sidebar-mini ',
+    'namePage' => 'User Profile',
+    'activePage' => 'profile',
+    'activeNav' => '',
+])
 
 @section('content')
+  <div class="panel-header panel-header-sm">
+  </div>
+  <div class="content">
     <div class="row">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card">
-                    <div class="card-header">
-                        <h5 class="title">Editar Categoria</h5>
+      <div class="col-md-8">
+        <div class="card">
+          <div class="card-header">
+            <h5 class="title">{{__("Editar perfil")}}</h5>
+          </div>
+          <div class="card-body">
+            <form method="post" action="{{ route('categorias.update', $categoria->id) }}" class="form-horizontal"
+            enctype="multipart/form-data">
+              @csrf
+              @method('put')
+              @include('alerts.success')
+              <div class="row">
+              </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label>{{__(" Nombre")}}</label>
+                        <input type="text" name="nombre" class="form-control" value="{{ old('nombre', $categoria->nombre) }}">
+                        @include('alerts.feedback', ['field' => 'nombre'])
                     </div>
-
-                    <form action="{{ route('categorias.update', $categoria->id) }}" method="post"   class="form-horizontal">
-                        @csrf
-                        @method('PUT')
-                        @include('alerts.success')
-
-                        @if (session('status'))
-                            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                {{ session('status') }}
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                        @endif
-
-
-                        <div class="pl-lg-4">
-                            <div class="form-group{{ $errors->has('nombre') ? ' has-danger' : '' }}">
-                                <label class="form-control-label" for="input-nombre">{{ __('nombre') }}</label>
-                                <input type="text" name="nombre" id="input-nombre" class="form-control form-control-alternative{{ $errors->has('nombre') ? ' is-invalid' : '' }}" value="{{  old('nombre', $categoria->nombre )}}" autofocus>
-
-                                @if ($errors->has('nombre'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('nombre') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-
-                            <div class="text-center">
-                                <button type="submit" class="btn btn-success mt-4">{{ __('Actualizar') }}</button>
-                            </div>
-                        </div>
-
-                    </form>
-                    <hr class="my-4" />
                 </div>
-            </div>
-        </div>
+              <div class="card-footer ">
+                <button type="submit" class="btn btn-primary btn-round">{{__('Actualizar')}}</button>
+              </div>
 
+            </form>
+          </div>
+
+      </div>
     </div>
+      
+  </div>
 @endsection

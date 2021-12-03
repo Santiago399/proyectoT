@@ -36,15 +36,16 @@ class MaterialController extends Controller
         return view('materiales.create', compact('tipos', 'marcas'));
     }
     public function store(Request $request){
-        // $rules = array(
-        //     'nombre' => 'required|max:30|unique:materiales',
-        //     'peso' => 'required|min:1',
-        //     'tamaño' => 'required|min:1',
-        //     'cantidad' => 'required|numeric',
-        //     'tipo_id' => 'required',
-        //     'marca_id' => 'required',
-        //     'estado' => 'required',
-        // );
+        $request->validate([
+            'nombre' => 'required|max:30|unique:materiales',
+            'peso' => 'required|min:1',
+            'tamaño' => 'required|min:1',
+            'cantidad' => 'required|numeric',
+            'tipo_id' => 'required',
+            'marca_id' => 'required',
+            'estado' => 'required',
+        ]);
+        
 
         // $validator = Validator::make(
         //     $request->all()

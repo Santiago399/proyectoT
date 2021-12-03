@@ -25,8 +25,12 @@ class TipoMaterialController extends Controller
             'nombre' => 'required|min:3|max:20|unique:tipo_materiales',
         ]);
 
-        TipoMaterial::create($request->all());
+        foreach($request->nombres as $key=>$nombres){
+            $data = new TipoMaterial();
+            $data->nombre = $nombres;
+            $data->save();
 
+        }
 
          return redirect()->route('tipoMateriales.index')->with('success', 'Tipo Material creado correctamente');
         //return redirect()->back(); // QUE CUANDO CREAA NOS REDIRECCIONE A LA VITA

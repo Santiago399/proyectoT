@@ -5,9 +5,6 @@
   ])
 
 @section('content')
-@section('css')
-    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.bootstrap4.min.css">
-@endsection
   <div class="panel-header panel-header-sm">
   </div>
   <div class="content">
@@ -76,7 +73,7 @@
                             <div class="form-group col-md-3{{ $errors->has('tipo_id') ? ' has-danger' : '' }}">
                                 <label class="form-control-label" for="input-name">{{ __('Tipo Material') }}</label>
                                 <select name="tipo_id" id="tipo_id" class="form-control form-control-alternative{{ $errors->has('tipo_id') ? ' is-invalid' : '' }}">
-                                    <option value="">--Seleccione --</option>
+                                    
                                     @foreach ($tipos as $tipo)
                                     <option value="{{ $tipo['id'] }}">{{ $tipo['nombre'] }}</option>
                 
@@ -92,7 +89,7 @@
                             <div class="form-group col-md-3{{ $errors->has('marca_id') ? ' has-danger' : '' }}">
                                 <label class="form-control-label" for="input-name">{{ __('Marca Del Material') }}</label>
                                 <select name="marca_id" id="marca_id" class="form-control form-control-alternative{{ $errors->has('marca_id') ? ' is-invalid' : '' }}">
-                                    <option value="">--Seleccione--</option>
+                                    
                                     @foreach ($marcas as $marca)
                                     <option value="{{ $marca['id'] }}">{{ $marca['nombre'] }}</option>
                 
@@ -107,8 +104,8 @@
                                 <div class="form-group col-md-3{{ $errors->has('estado') ? ' has-danger' : '' }}">
                                     <label for="estado">Estado:</label>
                                     <select class="form-control" id="estado" name="estado">
-                                    <option value="Pendiente">Activo</option>
-                                    <option value="Entregado">Inactivo</option>
+                                    <option value="Activo">Activo</option>
+                                    <option value="Inactivo">Inactivo</option>
                                   </select>
                                 @if ($errors->has('estado'))
                                     <span class="invalid-feedback" role="alert">
@@ -207,12 +204,6 @@
 @endsection
 
 @section('js')
-<script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js"></script>
-<script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
-<script src="https://cdn.datatables.net/responsive/2.2.9/js/responsive.bootstrap4.min.js"></script>
-
-
 <script>
     $('#materiales').DataTable({
                 "language": {
@@ -241,3 +232,4 @@
 </script>
 
 @endsection
+

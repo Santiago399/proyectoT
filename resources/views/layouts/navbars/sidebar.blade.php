@@ -27,7 +27,7 @@
           </a>
         </li>
         @endcan
-        @can('permisos.index')
+        @can('permissions.index')
         <li>
           <a href="{{ route('permissions.index') }}">
             <i class="now-ui-icons design_app"></i>
@@ -52,14 +52,14 @@
           </a>
         </li>
         @endcan
-        @can('clientes.index')
+        {{-- @can('clientes.index')
         <li>
           <a href="{{ route('clientes.index') }}">
             <i class="now-ui-icons users_circle-08"></i>
             <p>{{ __('Clientes') }}</p>
           </a>
         </li>
-        @endcan
+        @endcan --}}
         <hr>
         <h6 style="color:#fff; text-align:center">Configuración Inicial</h6>
         <hr>

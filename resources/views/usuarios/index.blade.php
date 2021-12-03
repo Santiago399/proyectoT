@@ -25,13 +25,13 @@
             
                             <div class="form-row">
                                 <div class="form-group col-md-4{{ $errors->has('name') ? ' has-danger' : '' }}">
-                                    <label>{{ _('Name') }}</label>
+                                    <label>{{ _('Nombre Completo') }}</label>
                                     <input type="text" name="name" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" placeholder="{{ _('Nombre') }}" value="{{ old('name') }}" autofocus>
                                     @include('alerts.feedback', ['field' => 'name'])
                                 </div>
                 
                                 <div class="form-group col-md-4{{ $errors->has('email') ? ' has-danger' : '' }}">
-                                    <label>{{ _('Email address') }}</label>
+                                    <label>{{ _('Correo') }}</label>
                                     <input type="email" name="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" placeholder="{{ _('Correo') }}" value="{{ old('email') }}" autofocus>
                                     @include('alerts.feedback', ['field' => 'email'])
                                 </div>

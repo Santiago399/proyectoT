@@ -43,7 +43,7 @@
             
             <div class="text-right">
                 @can('obras.create')
-                <a href="#" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#ModalCreate">Añadir obra</a>
+                <a href="{{ route('obras.create')}}" class="btn btn-sm btn-primary">Añadir obra</a>
                 @endcan
               </div>
             <h4 class="card-title"> Obras </h4>
@@ -89,8 +89,4 @@
       </div>
     </div>
   </div>
-@endsection
-
-@section('js')
-
 @endsection

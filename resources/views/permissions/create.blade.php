@@ -28,11 +28,15 @@
 
 
                 <div class="pl-lg-4">
-                    <div class="form-group{{ $errors->has('name') ? ' has-danger' : '' }}">
-                        <label class="form-control-label" for="input-name">{{ __('Nombre del permiso') }}</label>
-                        <input type="text" name="name" id="input-name" class="form-control form-control-alternative{{ $errors->has('name') ? ' is-invalid' : '' }}" autofocus>
-
-
+                    <div class="form-row">
+                        <div class="form-group{{ $errors->has('name') ? ' has-danger' : '' }}">
+                            <label class="form-control-label" for="input-name">{{ __('Nombre del permiso') }}</label>
+                            <input type="text" name="name" id="input-name" class="form-control form-control-alternative{{ $errors->has('name') ? ' is-invalid' : '' }}" autofocus>
+                        </div>
+                        <div class="form-group{{ $errors->has('description') ? ' has-danger' : '' }}">
+                            <label class="form-control-label" for="description">{{ __('descripcion del permiso') }}</label>
+                            <input type="text" name="description" id="description" class="form-control form-control-alternative{{ $errors->has('description') ? ' is-invalid' : '' }}" autofocus>
+                        </div>
                     </div>
                     <div class="text-center">
                         <button type="submit" class="btn btn-success mt-4">{{ __('Save') }}</button>

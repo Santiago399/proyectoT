@@ -29,34 +29,34 @@
               <table class="table">
                 <thead class=" text-primary">
                   <tr>
-                    <th>ID</th>
+                    <th hidden>ID</th>
                     <th>Nombre</th>
-                    <th>Guard</th>
+                    
                     <th>Permisos</th>
                   <th class="text-right">Acciones</th>
                 </thead>
                 <tbody>
                   @forelse ($roles as $role )
                   <tr>
-                    <td>{{ $role->id }}</td>
+                    <td hidden>{{ $role->id }}</td>
                     <td>{{ $role->name }}</td>
-                    <td>{{ $role->guard_name }}</td>
+                    
                     <td>
                       @forelse ($role->permissions as $permission )
                         <span class="badge badge-info"> {{ $permission->description }} </span>
                       @empty
-                        <span class="badge badge-danger"> No hay persisos agregados</span>
+                        <span class="badge badge-danger"> No hay permisos agregados</span>
                       @endforelse
                     </td>
                     <td class="text-right" >
 
                         {{-- <a href="{{ route('roles.show', $role->id) }}" class="btn btn-info btn-sm"><i >Detalle</i></a> --}}
-                        <a href="{{ route('roles.edit', $role->id) }}" class="btn btn-warning btn-sm"><i >Editar</i></a>
+                        <a href="{{ route('roles.edit', $role->id) }}" class="btn btn-gray btn-sm"><i class="now-ui-icons ui-2_settings-90"></i></a>
                         <form action="{{ route('roles.destroy', $role->id) }}" method="post" style="display: inline-block;" class="d-inline formulario-eliminar">
                           @csrf
                           @method('DELETE')
                           <button class="btn btn-danger btn-sm" type="submit">
-                             <i >Eliminar</i>
+                            <i class="now-ui-icons ui-1_simple-remove"></i>
                           </button>
                           </form>
                       </td>

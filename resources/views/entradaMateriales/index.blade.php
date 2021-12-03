@@ -5,14 +5,21 @@
   ])
 
 @section('content')
+<style>
+  .error {
+      color: red;
+      border-color: red;
+  }
+</style>
   <div class="panel-header panel-header-sm">
   </div>
   <div class="content">
     <div class="row">
       <div class="col-md-12">
           <div class="card">
+            <span id="message_error"></span>
               <div class="card-body">
-                <form action="{{ route('entradaMateriales.store') }}" method="POST">
+                <form id="validate" action="{{ route('entradaMateriales.store') }}" method="POST">
                   @csrf
                   <div class="panel panel-footer">
                     <table id="emptbl" class="table table-bordered">
@@ -27,7 +34,7 @@
                       <tbody>
                         <tr>
                           <td id="col0">
-                            <select name="material_id[]" id="material_id" class="form-control form-control-alternative{{ $errors->has('material_id') ? ' is-invalid' : '' }}">
+                            <select name="material_id[]" id="material_id" class="form-control form-control-alternative" required>
                               <option value="">--Escoja  el material --</option>
                               @foreach ($materiales as $material)
                               <option value="{{ $material['id'] }}">{{ $material['nombre'] }}</option>
@@ -36,7 +43,7 @@
                           </select>
                           </td>
                           <td id="col1">
-                            <select name="entrada_id[]" id="entrada_id" class="form-control form-control-alternative{{ $errors->has('entrada_id') ? ' is-invalid' : '' }}">
+                            <select name="entrada_id[]" id="entrada_id" class="form-control form-control-alternative" required>
                               <option value="">--Escoja  el entrada --</option>
                               @foreach ($entradas as $entrada)
                               <option value="{{ $entrada['id'] }}">{{ $entrada['fecha'] }}</option>
@@ -46,10 +53,10 @@
                           </td>
                           
                           <td id="col2">
-                            <input type="number" name="cantidad[]" id="cantidad" class="form-control form-control-alternative{{ $errors->has('cantidad') ? ' is-invalid' : '' }}" placeholder="{{ __('Ingrese el cantidad') }}" value="{{ old('cantidad') }}">
+                            <input type="number" name="cantidad[]" id="cantidad" class="form-control form-control-alternative" placeholder="{{ __('Ingrese el cantidad') }}" required>
                           </td>
                           <td id="col3">
-                            <input type="text" name="estado[]" id="estado[]" class="form-control form-control-alternative{{ $errors->has('estado') ? ' is-invalid' : '' }}" placeholder="{{ __('Ingrese el estado') }}" value="{{ old('estado') }}" >
+                            <input type="text" name="estado[]" id="estado" class="form-control form-control-alternative" placeholder="{{ __('Ingrese el estado') }}" required>
                           </td>
                         </tr>
                       </tbody>
@@ -108,6 +115,11 @@
 @endsection
 
 @section('js')
+<!-- library js validate -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="{{ asset('/js/validate.js')}}"></script>
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
 
 <script>
   function addRows()
@@ -141,5 +153,42 @@
       });
       }
   }
+</script>
+
+<!-- alert blink text -->
+<script>
+  function blink_text()
+  {
+      $('#message_error').fadeOut(700);
+      $('#message_error').fadeIn(700);
+  }
+  setInterval(blink_text,1000);
+</script>
+<!-- script validate form -->
+<script>
+  $('#validate').validate({
+      reles: {
+          'material_id[]': {
+              required: true,
+          },
+          'entrada_id[]': {
+              required:true,
+          },
+          'cantidad[]': {
+              required:true,
+              number:true,
+              min: 10
+          },
+          'estado[]': {
+              required:true,
+          },
+      },
+      messages: {
+          'material_id[]' : "Este campo es requerido",
+          'entrada_id[]' : "Este campo es requerido",
+          'cantidad[]' : "Este campo es requerido",
+          'estado[]' : "Este campo es requerido",
+      },
+  });
 </script>
 @endsection

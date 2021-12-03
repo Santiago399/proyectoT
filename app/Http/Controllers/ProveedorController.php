@@ -6,6 +6,7 @@ use App\Models\Proveedor;
 use Illuminate\Http\Request;
 use Validator;
 use App\Http\Requests\ProveedorRequest;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class ProveedorController extends Controller
 {
@@ -23,31 +24,15 @@ class ProveedorController extends Controller
     }
 
     public function store(ProveedorRequest $proveedor){
-
-        // $request->validate([
-        //     'nombre' => 'required|regex:/^[A-Zz][A-Z,a-z, ,á,é,í,ó,ü]+$/',
-        //     'apellido' => 'required|regex:/^[A-Z][A-Z,a-z, ,á,é,í,ó,ü]+$/',
-        //     'celular' =>'required|regex:/^[0-9]{10}$/|unique:proveedores',
-        //     'correo' => 'required|email|regex:/^[a-z,A-Z,0-9]+@[a-z,A-Z,0-9]+[.][a-zA-Z0-9-]+$/|unique:proveedores',
-        //     'clave' => 'required|numeric',
-        //     'estado' =>'required',
-
-        // ]);
         $validator = Validator::make(
             $proveedor->all(), 
             $proveedor->rules(),
             $proveedor->messages()
             );
             if ($validator->valid()) {
-                
-           
-
-
-        Proveedor::create($proveedor->all());
-
-        
-
-        return redirect()->route('proveedores.index')->with('success', 'correctamente');
+       Proveedor::create($proveedor->all()); 
+       Alert::success('Registrado', 'Se ha registrado correctamente');
+        return redirect()->route('proveedores.index');
         // return redirect()->back(); // QUE CUANDO CREAA NOS REDIRECCIONE A LA VITA
     }
 
@@ -59,25 +44,27 @@ class ProveedorController extends Controller
 
     }
 
-    public function edit(Proveedor $proveedor){
-
+    public function edit($id){
+        $proveedor = Proveedor::findorFail($id);
         return view('proveedores.edit', compact('proveedor'));
 
     }
 
-    public function update(Request $request, Proveedor $proveedor){
+    public function update(Request $request, $id){
 
+        $proveedor = Proveedor::findOrFail($id);
+        $proveedor->update($request->all());
 
-        $proveedor->update($request->only('nombre', 'apellido', 'celular', 'correo', 'clave', 'estado'));
-
-        return redirect()->route('proveedores.index')->with('success', 'Proveedor actualizado correctamente');
+        Alert::success('Actualizado', 'Se actualizado correctamente');
+        return redirect()->route('proveedores.index');
 
     }
 
-    public function destroy(Proveedor $proveedor){
+    public function destroy($id){
 
+        $proveedor = Proveedor::findOrFail($id);
         $proveedor->delete();
-        return back()->with('success', 'Proveedor eliminado correctamente');
+        return back()->with('satisfactoriamente', 'Se elimino con éxito.');
 
     }
 }

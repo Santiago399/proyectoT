@@ -36,7 +36,7 @@ class ObraController extends Controller
     public function store(Request $request){
 
         $request->validate([
-            'nombre' => 'required|min:3|max:20|unique:obras',
+            'nombre' => 'required|min:3|max:50|unique:obras',
             'fechaInicio' => 'required|date',
             'fechaEntrega' => 'required|date',
             'estado' => 'required',

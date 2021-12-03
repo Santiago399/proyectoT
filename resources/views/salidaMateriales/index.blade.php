@@ -28,7 +28,7 @@
                         <tr>
                           <td id="col0">
                             <select name="material_id[]" id="material_id" class="form-control form-control-alternative{{ $errors->has('material_id') ? ' is-invalid' : '' }}">
-                              <option value="">--Escoja  el material --</option>
+                              
                               @foreach ($materiales as $material)
                               <option value="{{ $material['id'] }}">{{ $material['nombre'] }}</option>
   
@@ -37,7 +37,7 @@
                           </td>
                           <td id="col1">
                             <select name="salida_id[]" id="salida_id" class="form-control form-control-alternative{{ $errors->has('entrada_id') ? ' is-invalid' : '' }}">
-                              <option value="">--Escoja  la salida--</option>
+                              
                               @foreach ($salidas as $salida)
                               <option value="{{ $salida['id'] }}">{{ $salida['fecha'] }}</option>
   
@@ -58,9 +58,9 @@
                       <br>
                       <tr>
                         <tr>
-                          <td><button type="button" class="btn btn-sm btn-info " onclick="addRows()">Agregar</button></td>
-                          <td><button type="button" class="btn btn-sm btn-danger " onclick="deleteRows()">Rewmover</button></td>
-                          <td><button type="submit" class="btn btn-sm btn-primary" >save</button></td>
+                          <td><button type="button" class="btn btn-sm btn-info " onclick="addRows()">Añadir</button></td>
+                          <td><button type="button" class="btn btn-sm btn-danger " onclick="deleteRows()">Remover</button></td>
+                          <td><button type="submit" class="btn btn-sm btn-primary" >Guardar</button></td>
                         </tr>
                       </tr>
                     </table>

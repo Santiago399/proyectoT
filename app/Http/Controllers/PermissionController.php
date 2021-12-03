@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Permission;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class PermissionController extends Controller
 {
@@ -47,8 +48,8 @@ class PermissionController extends Controller
 
         ]);
 
-        Permission::create($request->only('name'));
-
+        Permission::create($request->only('name','description'));
+        Alert::success('Registrado', 'Se ha registrado correctamente');
         return redirect()->route('permissions.index');
     }
 
@@ -83,8 +84,8 @@ class PermissionController extends Controller
      */
     public function update(Request $request, Permission $permission)
     {
-        $permission->update($request->only('name'));
-
+        $permission->update($request->only('name', 'description'));
+        Alert::success('Actualizado', 'Se actualizado correctamente');
         return redirect()->route('permissions.index');
     }
 
@@ -98,6 +99,6 @@ class PermissionController extends Controller
     {
         $permission->delete();
 
-        return redirect()->route('permissions.index');
+        return redirect()->route('permissions.index')->with('satisfactoriamente', 'Se elimino con éxito.');
     }
 }

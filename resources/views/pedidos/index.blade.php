@@ -24,7 +24,7 @@
               <table class="table">
                 <thead class=" text-primary">
                   <tr>
-                  <th>ID</th>
+                  <th hidden>ID</th>
                   <th>Codigo</th>
                   <th>fecha de creacion</th>
                   <th>FechaEnvio</th>
@@ -37,14 +37,14 @@
                 <tbody>
                   @forelse ($pedidos as $pedido )
                   <tr>
-                    <td>{{ $pedido->id }}</td>
+                    <td hidden>{{ $pedido->id }}</td>
                     <td>{{ $pedido->codigo}}</td>
                     <td>{{ $pedido->created_at}}</td>
                     <td>{{ $pedido->fechaEnvio }}</td>
-                    @foreach ( $materiales as $material )
-                    <td><a href="{{ route('materiales.show', $material->id)}}">Ver Material</a> </td>
+    
+                    <td>{{ $pedido->material_id }}</td>
                     
-                    @endforeach
+                    
                     <td>{{ $pedido->cantidad }}</td>
                     <td>{{ $pedido->descripcion}}</td>
                     <td>{{ $pedido->estado }}</td>
@@ -52,15 +52,15 @@
                         
                         <a href="{{ route('pedidos.edit', $pedido->id)}}" class="btn btn-gray btn-sm btn-icon" > <i class="now-ui-icons ui-2_settings-90"></i></a>
                         
-                        {{-- @can('pedidos.destroy')
-                        <form action="{{ route('salidas.destroy', $salida->id) }}" method="post" style="display: inline-block; " onsubmit="return confirm('seguro ?')">
+                        @can('pedidos.destroy')
+                        <form action="{{ route('pedidos.destroy', $pedido->id) }}" method="post" style="display: inline-block; " class="formulario-eliminar">
                             @csrf
                             @method('DELETE')
                             <button class="btn btn-danger btn-sm" type="submit">
                                   <i >Eliminar</i>
                             </button>
                         </form>
-                        @endcan --}}
+                        @endcan
                       </td>
                     </tr>
                     @empty
@@ -77,4 +77,47 @@
       </div>
     </div>
   </div>
+@endsection
+@section('js')
+
+@if (session('satisfactoriamente') == 'Se elimino con éxito.')
+    <script>
+      Swal.fire(
+      '¡Eliminado!',
+      'El registro se elimino con éxito.',
+      'success'
+    )
+    </script>
+@endif
+<script>
+
+$('.formulario-eliminar').submit(function (e) {
+  e.preventDefault();
+
+
+  Swal.fire({
+  title: '¿Estas seguro?',
+  text: "¡El registro se eliminara definitivamente!",
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonColor: '#3085d6',
+  cancelButtonColor: '#d33',
+  confirmButtonText: '¡Si, eliminar!',
+  cancelButtonText: 'Cancelar',
+}).then((result) => {
+  if (result.isConfirmed) {
+    // Swal.fire(
+    //   'Deleted!',
+    //   'Your file has been deleted.',
+    //   'success'
+    // )
+
+    this.submit();
+  }
+})
+  
+});
+
+</script>
+    
 @endsection

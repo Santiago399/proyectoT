@@ -125,7 +125,7 @@
                             <!-- end header inner -->
                             <!-- end header -->
                             <!-- banner -->
-                            <section class="banner_main">
+                            {{-- <section class="banner_main">
                             <div id="myCarousel" class="carousel slide banner" data-ride="carousel">
                                 <ol class="carousel-indicators">
                                     <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
@@ -182,7 +182,7 @@
                                 <span class="sr-only">Next</span>
                                 </a>
                             </div>
-                            </section>
+                            </section> --}}
                         </header>
                         <!-- end banner -->
                         <hr class="m-2" />

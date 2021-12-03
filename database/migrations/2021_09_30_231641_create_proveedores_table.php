@@ -19,8 +19,7 @@ class CreateProveedoresTable extends Migration
             $table->string('apellido', 20);
             $table->integer('celular');
             $table->string('correo')->unique();
-            $table->integer('clave');
-            $table->enum('estado',['activo' , 'inactivo'])->default('activo');
+            $table->string('estado', 20);
 
             $table->timestamps();
         });

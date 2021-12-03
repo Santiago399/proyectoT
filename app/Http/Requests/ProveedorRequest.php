@@ -26,9 +26,8 @@ class ProveedorRequest extends FormRequest
         return [
             'nombre' => 'required|min:3|max:50|regex:/^[A-Zz][A-Z,a-z, ,á,é,í,ó,ü]+$/',
             'apellido' => 'required|min:3|max:50|regex:/^[A-Z][A-Z,a-z, ,á,é,í,ó,ü]+$/',
-            'celular' =>'required|regex:/^[0-9]{10}$/|unique:proveedores',
+            'celular' =>'required|min:7|max:10|unique:proveedores',
             'correo' => 'required|email|regex:/^[a-z,A-Z,0-9]+@[a-z,A-Z,0-9]+[.][a-zA-Z0-9-]+$/|unique:proveedores',
-            'clave' => 'required|numeric|min:5|max:15',
             'estado' =>'required',
         ];
     }
@@ -45,8 +44,8 @@ class ProveedorRequest extends FormRequest
             'correo.required' => 'El campo correo es requerido',
             'correo.email' => 'El formato de email es incorrecto',
             'celular.required' => 'El campo celulares requerido',
-            'celular.regex' => 'Dijita 9 ',
-            'clave.required' => 'Solo numeros minimo 5 maximo 15 '
+            'celular.min' => 'El mínimo permitido son 7 numeros',
+            'celular.max' => 'El máximo permitido son 10 numeros',
         ];
     }
     public function response(array $errors){
